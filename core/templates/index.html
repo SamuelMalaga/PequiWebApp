@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <title>Document</title>
+</head>
+<body>
+  {% if request.user.is_anonymous %}
+        <h2> Faça o login <h2>
+        <h2><a href="/login/"> Login! </a> </h2>
+  {% else %}
+        <h2> Bem vindo <h2>
+        <h3> Seu email é {{user.email}}
+        <h3> Seu CPF é {{user.usuario_pequi.DOC_Usuario}}
+        <h3> Seu ID é user {{user.id}} <h3>
+        <h3> Produtor? {{user.usuario_pequi.is_Produtor}} <h3>
+        <h3> CNPJ? {{user.usuario_pequi.is_CNPJ}} <h3>
+        <h3> ID pequi_usuario {{user.usuario_pequi.user_id}} <h3>
+        <h3> Data nascimento {{user.usuario_pequi.data_nascimento_usuario}} <h3>
+        <h2><a href="/logout/">Sair </a></h2>
+  {% endif %}
+  <h1> Pagina inicial <h1>
+</body>
+</html>

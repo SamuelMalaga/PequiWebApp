@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <h1> Login </h1>
+    <form action="/login/submit/" method= "post" class="form" autocomplete="off" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="usuario"> Usuario</label><br>
+        <input type="text" name="usuario" value=""><br>
+        <label for="senha"> Senha</label><br>
+        <input type="password" name="senha" value=""><br>
+        <input type="submit" class="btn btn-primary" value="Submit"><br>
+  </div>
+</body>
+</html>
