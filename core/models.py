@@ -4,15 +4,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 # Create your models here.
 
-# class Produto(models,Model):
-#   nome_produto = models.CharField('nome_produto', max_length=225)
-#   preco_produto = models.DecimalField('preco_produto', decimal_places=2, max_digits=15)
-#   descricao_produto = models.CharField('descricao_produto', blank=True, null=True )
-#   quantidade_produto = models.DecimalField('quantidade_produto')
-#   imagem_produto = models.ImageField('imagem_produto', blank=True, null=True, upload_to="core")
-#   tipo_produto = models.CharField('tipo_produto', max_length=200)
-#   produtor_id = models.ForeignKey('Produtor', on_delete=models.CASCADE)
-
 class Usuario_pequi(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -26,16 +17,18 @@ class Usuario_pequi(models.Model):
 
 
 class Produto(models.Model):
-  # nome_produto = models.CharField('nome_produto', max_length=225)
-  # preco_produto = models.DecimalField('preco_produto', decimal_places=2, max_digits=15)
-  # descricao_produto = models.CharField('descricao_produto',max_length=225, blank=True, null=True )
-  # quantidade_produto = models.DecimalField('quantidade_produto',decimal_places=2, max_digits=15)
-  # imagem_produto = models.ImageField('imagem_produto', blank=True, null=True, upload_to="core")
-  # tipo_produto = models.CharField('tipo_produto', max_length=200)
-  # ID_Usuario_Produtor_Produto = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
-  # def __str__(self) -> str:
-  #   return self.nome_produto
-  pass
+
+  ID_User_Produtor_Produto = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
+  nome_produto = models.CharField('nome_produto', max_length=225, null=True)
+  preco_produto = models.DecimalField('preco_produto', decimal_places=2, max_digits=15, null=True)
+  descricao_produto = models.CharField('descricao_produto',max_length=225, blank=True, null=True )
+  quantidade_produto = models.DecimalField('quantidade_produto',decimal_places=2, max_digits=15, null=True)
+  imagem_produto = models.ImageField('imagem_produto', blank=True, null=True, upload_to="core")
+  tipo_produto = models.CharField('tipo_produto', max_length=200, null=True)
+
+  def __str__(self) -> str:
+     return self.nome_produto
 
 class Endereco(models.Model):
   # rua_endereco = models.CharField('rua_endereco', max_length=225)

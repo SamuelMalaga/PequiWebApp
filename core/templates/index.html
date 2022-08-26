@@ -12,6 +12,8 @@
   {% if request.user.is_anonymous %}
         <h2> Faça o login <h2>
         <h2><a href="/login/"> Login! </a> </h2>
+        <h2> Ou cadastre-se <h2>
+        <h2><a href="/registre/submit"> Cadastro! </a> </h2>
   {% else %}
         <h2> Bem vindo <h2>
         <h3> Seu email é {{user.email}}
@@ -20,7 +22,10 @@
         <h3> Produtor? {{user.usuario_pequi.is_Produtor}} <h3>
         <h3> CNPJ? {{user.usuario_pequi.is_CNPJ}} <h3>
         <h3> ID pequi_usuario {{user.usuario_pequi.user_id}} <h3>
-        <h3> Data nascimento {{user.usuario_pequi.data_nascimento_usuario}} <h3>
+        <h3> Data nascimento {{user.usuario_pequi.data_nascimento_usuario}}<h3>
+          {%if user.usuario_pequi.is_Produtor%}
+            <h2> Cadastre o produto aqui </h2>
+          {% endif%}
         <h2><a href="/logout/">Sair </a></h2>
   {% endif %}
   <h1> Pagina inicial <h1>
