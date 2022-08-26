@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styless.css" >
+  <title>Pequi - Produtos Orgânicos</title>
+</head>
+<body>
+  <header>
+    <img sstyle="position:absolute; right:10px; top:70px" src="pequi.png" alt="Logo"  width="100%" height="100%">
+    <nav>
+        <span id="header">
+            <ul class="menu">
+              <li><a href="sobre.html">Sobre</a></li>
+              <li><a href="produtos.html">Produtos</a></li>
+              <li><a href="cadastro.html">Cadastre-se</a></li>
+              <li><a href="login.html">Login</a></li>
+              <li><a href="contato.html">Contato</a></li>
+              <li><a href="ajuda.html">Ajuda</a></li> 
+            </ul>
+        </span>
+      </nav>
+</header>
+  <!--FORMULÁRIO DE CADASTRO-->
+  <div id="cadastro">
+    <form method="post" action=""> 
+      <h1>Cadastro</h1> 
+       
+      <p>
+        <select name="pf_pj" id="" >
+            <option value="PF">Pessoa Física</option>
+            <option value="PJ">Pessoa Jurídica</option>
+        </select>
+      </p>
+
+      <p> 
+        <label for="CPF/CNPJ_cad">CPF / CNPJ</label>
+        <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="cpf/cnpj" />
+      </p>
+
+      <p> 
+        <label for="nome_cad">Nome / Razão Social</label>
+        <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="nome" />
+      </p>
+      
+      <p> 
+        <label for="email_cad">Seu e-mail</label>
+        <input id="email_cad" name="email_cad" required="required" type="email" placeholder="contato@pequi.com"/> 
+      </p>
+       
+      <p> 
+        <label for="senha_cad">Sua senha</label>
+        <input id="senha_cad" name="senha_cad" required="required" type="password" placeholder="ex. @1234*"/>
+      </p>
+      
+      <p> 
+        <label for="rua_cad">Rua:  nº comp.:  </label>
+        <input id="rua_cad" name="rua_cad" required="required" type="text" placeholder="Endereço" />
+      </p>
+
+      <p> 
+        <label for="nome_cad">Nome / Razão Social</label>
+        <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="nome" />
+      </p>
+      <p class="checkbox"> 
+        <input type="checkbox" name="fornecedor" id="fornecedor" value="" /> 
+        <label for="manterlogado">Sou fornecedor</label>
+      </p>
+
+      <p> 
+        <input type="submit" value="Cadastrar"/> 
+      </p>
+       
+      <p class="link">  
+        Já tem conta?
+        <a href="login.html"> Ir para Login </a>
+      </p>
+    </form>
+  </div>
+</body>
+<footer>
+  <p class="rodape"> Desenvolvido por: Ana Vieira, Angélica Santos, Arthur Martins Coimbra, Samuel Malaga  <br>
+      &copy; 2022 - DCC apresentado para conclusão do curso Fellowship de Dev Web - Sirius Educação <br>
+  </p>
+</footer>
+</html>
