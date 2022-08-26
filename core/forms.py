@@ -1,9 +1,12 @@
 
+from dataclasses import fields
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Usuario_pequi
+from .models import Usuario_pequi, Produto
 
+
+#---->Formulários para criação de usuário pequi, classe base de Usuário do django e atributos estendidos
 class ExtendedUserCreationForms(UserCreationForm):
   email = forms.EmailField(required=True)
   first_name = forms.CharField(max_length=50, required=True)
@@ -28,3 +31,11 @@ class UserPequiForm(forms.ModelForm):
   class Meta:
     model = Usuario_pequi
     fields = ('data_nascimento_usuario', 'DOC_Usuario', 'is_CNPJ', 'is_Produtor')
+
+#----->Forms para o cadastro de produtos
+
+class ProdutoModelForm(forms.ModelForm):
+
+  class Meta:
+    model = Produto
+    fields = ['nome_produto', 'preco_produto', 'descricao_produto', 'quantidade_produto', 'imagem_produto', 'tipo_produto']
