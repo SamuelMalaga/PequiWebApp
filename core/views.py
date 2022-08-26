@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.http import Http404
 from django.contrib import messages
 from .models import Usuario_pequi
 from django.contrib.auth import login, logout, authenticate
@@ -75,8 +76,12 @@ def produto(request):
   if request.method == 'POST':
     form = ProdutoModelForm(request.POST, request.FILES)
     if form.is_valid():
+      instance = form.save(commit=False)
 
-      form.save()
+      instance.user_produtor = request.user
+
+      instance.save()
+
       messages.success(request, 'Produto cadastrado com sucesso')
       form = ProdutoModelForm()
     else:
@@ -87,14 +92,17 @@ def produto(request):
   return render(request, 'produto.html', context)
 
 def produto_submit(request):
+  if not request.user.is_authenticated:
+    raise Http404
+
   if request.method == 'POST':
     form = ProdutoModelForm(request.POST, request.FILES)
     if form.is_valid():
-      form.save(commit=False)
+      instance = form.save(commit=False)
 
-      form.user = request.user
+      instance.user_produtor = request.user
 
-      form.save()
+      instance.save()
       messages.success(request, 'Deu certo cadastrar')
       return redirect('/')
     else:

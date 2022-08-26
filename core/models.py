@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -18,7 +19,7 @@ class Usuario_pequi(models.Model):
 
 class Produto(models.Model):
 
-  ID_User_Produtor_Produto = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+  user_produtor = models.ForeignKey(User,default=None , null=True, on_delete=models.CASCADE)
 
   nome_produto = models.CharField('nome_produto', max_length=225, null=True)
   preco_produto = models.DecimalField('preco_produto', decimal_places=2, max_digits=15, null=True)
