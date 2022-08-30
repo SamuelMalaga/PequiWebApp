@@ -3,7 +3,7 @@ from dataclasses import fields
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Usuario_pequi, Produto
+from .models import Endereco, Usuario_pequi, Produto
 
 
 #---->Formulários para criação de usuário pequi, classe base de Usuário do django e atributos estendidos
@@ -39,3 +39,9 @@ class ProdutoModelForm(forms.ModelForm):
   class Meta:
     model = Produto
     fields = ['nome_produto', 'preco_produto', 'descricao_produto', 'quantidade_produto', 'imagem_produto', 'tipo_produto']
+
+#----->Forms para o cadastro de enderecos
+class EnderecoModelForm(forms.ModelForm):
+  class Meta:
+    model = Endereco
+    fields = ['rua_endereco','CEP_endereco', 'bairro_endereco', 'cidade_endereco', 'estado_endereco' ]

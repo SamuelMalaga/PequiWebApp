@@ -32,16 +32,14 @@ class Produto(models.Model):
      return self.nome_produto
 
 class Endereco(models.Model):
-  # rua_endereco = models.CharField('rua_endereco', max_length=225)
-  # CEP_endereco = models.CharField('CEP_endereco', max_length=225)
-  # bairro_endereco = models.CharField('bairro_endereco', max_length=225)
-  # cidade_endereco = models.CharField('cidade_endereco', max_length=225)
-  # estado_endereco = models.CharField('estado_endereco', max_length=225)
-  # ID_usuario_endereco = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
+  user_endereco = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+  rua_endereco = models.CharField('rua_endereco', max_length=225, null=True)
+  CEP_endereco = models.CharField('CEP_endereco', max_length=225, null=True)
+  bairro_endereco = models.CharField('bairro_endereco', max_length=225, null=True)
+  cidade_endereco = models.CharField('cidade_endereco', max_length=225, null=True)
+  estado_endereco = models.CharField('estado_endereco', max_length=225, null=True)
 
-  #def __str__(self) -> str:
-  #  return self.nome_produto
-  pass
+
 class Contato(models.Model):
   # telefone_contato = models.CharField('telefone_contato', max_length=225)
   # email_contato = models.CharField('email_contato', max_length=225)
