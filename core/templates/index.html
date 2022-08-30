@@ -23,11 +23,20 @@
         <h3> CNPJ? {{user.usuario_pequi.is_CNPJ}} <h3>
         <h3> ID pequi_usuario {{user.usuario_pequi.user_id}} <h3>
         <h3> Data nascimento {{user.usuario_pequi.data_nascimento_usuario}}<h3>
+        <h3> Cadastre o endereco<a href="/endereco/"> Aqui </a><h3>
           {%if user.usuario_pequi.is_Produtor%}
-            <h2> Cadastre o produto aqui </h2>
+            <h2> Cadastre o produto <a href="/produto/"> Aqui </a> </h2>
           {% endif%}
         <h2><a href="/logout/">Sair </a></h2>
   {% endif %}
   <h1> Pagina inicial <h1>
+  <h2> Produtos </h2>
+    <ul>
+      {{Produtos}}
+      {% for Produto in Produtos %}
+      <li> {{Produto.nome_produto}} - {{Produto.descricao_produto}} </li>
+      {% endfor %}
+    </ul>
+
 </body>
 </html>

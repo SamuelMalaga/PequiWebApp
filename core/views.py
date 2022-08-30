@@ -1,11 +1,12 @@
+from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import Http404
 from django.contrib import messages
-from .models import Usuario_pequi
+from .models import Produto, Usuario_pequi
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import ExtendedUserCreationForms, UserPequiForm, ProdutoModelForm
+from .forms import EnderecoModelForm, ExtendedUserCreationForms, UserPequiForm, ProdutoModelForm
 
 # Create your views here.
 
@@ -73,6 +74,8 @@ def login_submit(request):
 ##-----> Registro de produtos
 
 def produto(request):
+  if not request.user.is_authenticated:
+    raise Http404
   if request.method == 'POST':
     form = ProdutoModelForm(request.POST, request.FILES)
     if form.is_valid():
@@ -111,9 +114,58 @@ def produto_submit(request):
   else:
     return redirect('index')
 
+##------> Registro de endereços
+
+def cadastro_endereco(request):
+  if not request.user.is_authenticated:
+    raise Http404
+  if request.method == 'POST':
+    form = EnderecoModelForm(request.POST, request.FILES)
+    if form.is_valid():
+      instance = form.save(commit=False)
+
+      instance.user_endereco = request.user
+
+      instance.save()
+
+      messages.success(request, 'Endereco cadastrado com sucesso')
+      form = EnderecoModelForm()
+    else:
+      messages.error(request, 'Erro ao salvar endereco')
+  else:
+    form = EnderecoModelForm()
+  context = {'form':form }
+  return render(request, 'produto.html', context)
+
+def endereco_submit(request):
+  if not request.user.is_authenticated:
+    raise Http404
+
+  if request.method == 'POST':
+    form = EnderecoModelForm(request.POST, request.FILES)
+    if form.is_valid():
+      instance = form.save(commit=False)
+
+      instance.user_endereco = request.user
+
+      instance.save()
+      messages.success(request, 'Deu certo cadastrar')
+      return redirect('/')
+    else:
+      messages.error(request, 'Erro ao salvar produto')
+      return redirect(request, 'produto.html')
+  else:
+    return redirect('index')
+
 ##------> Home Page e debugger
 def index(request):
+  produtos = Produto.objects.all()
+  context = {
+    "Produtos" : produtos
+  }
   print('USER METHODS',dir(request.user))
   print('rEQUEST METHODS',dir(request))
+  for i in produtos:
+    print(dir(produtos))
   # print('Teste __str__',request.user.usuario_pequi.__str__ )
-  return render(request, 'index.html')
+  return render(request, 'index.html', context)
