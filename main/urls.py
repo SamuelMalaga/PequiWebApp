@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import index, login_user, login_submit, registre, create_usuario, logout_user, produto,produto_submit, cadastro_endereco, endereco_submit
+from core.views import index, login_user, login_submit, registre, create_usuario, logout_user, produto,produto_submit, cadastro_endereco, endereco_submit, cadastro_contato, contato_submit
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -32,7 +32,10 @@ urlpatterns = [
     path('produto/', produto, name='produto'),
     path('produto/submit', produto_submit, name='produto_submit'),
     path('endereco/', cadastro_endereco, name='cadastro_endereco'),
-    path('endereco/submit', endereco_submit, name='endereco_submit')
+    path('endereco/submit', endereco_submit, name='endereco_submit'),
+    path('contato/', cadastro_contato, name='cadastro_contato'),
+    path('contato/submit', contato_submit, name='contato_submit')
 
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+

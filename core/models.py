@@ -17,6 +17,14 @@ class Usuario_pequi(models.Model):
     return self.user.username
 
 
+PRODUTO_CHOICES = [
+  ('alimento', 'Alimento'),
+  ('bebidas', 'Bebida'),
+  ('cosmetico', 'Cosmetico'),
+  ('vestimenta', 'Vestimenta'),
+  ('outros','Outros')
+]
+
 class Produto(models.Model):
 
   user_produtor = models.ForeignKey(User,default=None , null=True, on_delete=models.CASCADE)
@@ -26,7 +34,7 @@ class Produto(models.Model):
   descricao_produto = models.CharField('descricao_produto',max_length=225, blank=True, null=True )
   quantidade_produto = models.DecimalField('quantidade_produto',decimal_places=2, max_digits=15, null=True)
   imagem_produto = models.ImageField('imagem_produto', blank=True, null=True, upload_to="core")
-  tipo_produto = models.CharField('tipo_produto', max_length=200, null=True)
+  tipo_produto = models.CharField('tipo_produto', max_length=200,choices=PRODUTO_CHOICES, null=True)
 
   def __str__(self) -> str:
      return self.nome_produto
@@ -41,11 +49,8 @@ class Endereco(models.Model):
 
 
 class Contato(models.Model):
-  # telefone_contato = models.CharField('telefone_contato', max_length=225)
-  # email_contato = models.CharField('email_contato', max_length=225)
-  # is_wpp = models.BooleanField('is_wpp')
-  # ID_usuario_contato = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
+  user_contato = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+  telefone_contato = models.CharField('telefone_contato',null=True, max_length=225)
+  email_contato = models.CharField('email_contato',null=True, max_length=225)
+  is_wpp = models.BooleanField('is_wpp', null=True)
 
-  #def __str__(self) -> str:
-  #  return self.nome_produto
-  pass
