@@ -1,17 +1,9 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <title>Document</title>
-</head>
-<body>
+{% extends 'global_template.html' %}
+
+{% block content %}
+  <h1>Teste css</h1>
   {% if request.user.is_anonymous %}
         <h2> Faça o login <h2>
-        <h2><a href="/login/"> Login! </a> </h2>
         <h2> Ou cadastre-se <h2>
         <h2><a href="/registre/submit"> Cadastro! </a> </h2>
   {% else %}
@@ -24,6 +16,7 @@
         <h3> ID pequi_usuario {{user.usuario_pequi.user_id}} <h3>
         <h3> Data nascimento {{user.usuario_pequi.data_nascimento_usuario}}<h3>
         <h3> Cadastre o endereco<a href="/endereco/"> Aqui </a><h3>
+        <h3> Cadastre o Contato<a href="/contato/"> Aqui </a><h3>
           {%if user.usuario_pequi.is_Produtor%}
             <h2> Cadastre o produto <a href="/produto/"> Aqui </a> </h2>
           {% endif%}
@@ -34,9 +27,7 @@
     <ul>
       {{Produtos}}
       {% for Produto in Produtos %}
-      <li> {{Produto.nome_produto}} - {{Produto.descricao_produto}} </li>
+      <li> {{Produto.nome_produto}} - {{Produto.descricao_produto}} - {{Produto.user_produtor}}</li>
       {% endfor %}
     </ul>
-
-</body>
-</html>
+{% endblock %}

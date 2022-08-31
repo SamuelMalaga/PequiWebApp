@@ -1,9 +1,9 @@
 
-from dataclasses import fields
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Endereco, Usuario_pequi, Produto
+from .models import Endereco, Usuario_pequi, Produto, Contato
+
 
 
 #---->Formulários para criação de usuário pequi, classe base de Usuário do django e atributos estendidos
@@ -33,7 +33,7 @@ class UserPequiForm(forms.ModelForm):
     fields = ('data_nascimento_usuario', 'DOC_Usuario', 'is_CNPJ', 'is_Produtor')
 
 #----->Forms para o cadastro de produtos
-
+##------> Ajustar o tipo de produto para dropdown
 class ProdutoModelForm(forms.ModelForm):
 
   class Meta:
@@ -45,3 +45,8 @@ class EnderecoModelForm(forms.ModelForm):
   class Meta:
     model = Endereco
     fields = ['rua_endereco','CEP_endereco', 'bairro_endereco', 'cidade_endereco', 'estado_endereco' ]
+
+class ContatoModelForm(forms.ModelForm):
+  class Meta:
+    model = Contato
+    fields = ['telefone_contato','email_contato', 'is_wpp']
