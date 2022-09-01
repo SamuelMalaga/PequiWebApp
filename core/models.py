@@ -5,6 +5,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 # Create your models here.
 
+#Ao apresentar tirar todos os null=True e recriar as db's
+
 class Usuario_pequi(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -38,14 +40,42 @@ class Produto(models.Model):
 
   def __str__(self) -> str:
      return self.nome_produto
-
+ESTADO_CHOICES = [
+  ('AC','Acre'),
+  ('AL','Alagoas'),
+  ('AP','Amapá'),
+  ('AM','Amazonas'),
+  ('BA','Bahia'),
+  ('CE','Ceará'),
+  ('DF','Distrito Federal'),
+  ('ES','Espírito Santo'),
+  ('GO','Goiás'),
+  ('MA','Maranhão'),
+  ('MT','Mato Grosso'),
+  ('MS','Mato Grosso do Sul'),
+  ('MG','Minas Gerais'),
+  ('PA','Pará'),
+  ('PB','Paraíba'),
+  ('PR','Paraná'),
+  ('PE','Pernambuco'),
+  ('PI','Piauí'),
+  ('RJ','Rio de Janeiro'),
+  ('RN','Rio Grande do Norte'),
+  ('RS','Rio Grande do Sul'),
+  ('RO','Rondônia'),
+  ('RR','Roraima'),
+  ('SC','Santa Catarina'),
+  ('SP','São Paulo'),
+  ('SE','Sergipe'),
+  ('TO','Tocantins')
+]
 class Endereco(models.Model):
   user_endereco = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
   rua_endereco = models.CharField('rua_endereco', max_length=225, null=True)
   CEP_endereco = models.CharField('CEP_endereco', max_length=225, null=True)
   bairro_endereco = models.CharField('bairro_endereco', max_length=225, null=True)
   cidade_endereco = models.CharField('cidade_endereco', max_length=225, null=True)
-  estado_endereco = models.CharField('estado_endereco', max_length=225, null=True)
+  estado_endereco = models.CharField('estado_endereco', max_length=225,choices=ESTADO_CHOICES, null=True)
 
 
 class Contato(models.Model):

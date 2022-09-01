@@ -3,6 +3,8 @@ from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import Http404
 from django.contrib import messages
+
+from .filters import ProdutoFilter
 from .models import Produto, Usuario_pequi
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -228,7 +230,13 @@ def contato_submit(request):
 ##------> Home Page e debugger
 def index(request):
   produtos = Produto.objects.all()
+
+  meuFiltro = ProdutoFilter(request.GET, queryset=produtos)
+  produtos = meuFiltro.qs
+
+
   context = {
-    "Produtos" : produtos
+    "Produtos" : produtos,
+    "meuFiltro" : meuFiltro
   }
   return render(request, 'index.html', context)

@@ -24,6 +24,10 @@
   {% endif %}
   <h1> Pagina inicial <h1>
   <h2> Produtos </h2>
+    <form method="get">
+      {{meuFiltro.form}}
+      <button type="submit">Procurar</button>
+    </form>
     <ul>
       {{Produtos}}
       {% for Produto in Produtos %}
