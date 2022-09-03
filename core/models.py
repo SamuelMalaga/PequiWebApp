@@ -37,7 +37,7 @@ class Produto(models.Model):
   quantidade_produto = models.DecimalField('quantidade_produto',decimal_places=2, max_digits=15, null=True)
   imagem_produto = models.ImageField('imagem_produto', blank=True, null=True, upload_to="core")
   tipo_produto = models.CharField('tipo_produto', max_length=200,choices=PRODUTO_CHOICES, null=True)
-
+  #Restringir a quantidade do produto por lista com kg, g, unidade, peça e etc....
   def __str__(self) -> str:
      return self.nome_produto
 ESTADO_CHOICES = [
