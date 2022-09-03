@@ -28,10 +28,37 @@
       {{meuFiltro.form}}
       <button type="submit">Procurar</button>
     </form>
-    <ul>
-      {{Produtos}}
+    <table>
+      <tr>
+        <th>Nome do produto</th>
+        <th>Descrição</th>
+        <th>Tipo Produto</th>
+        <th>Produtor</th>
+      </tr>
       {% for Produto in Produtos %}
-      <li> {{Produto.nome_produto}} - {{Produto.descricao_produto}} - {{Produto.user_produtor}}</li>
+      <tr>
+        <th><a href= "{% url 'produto_detalhe' Produto.id %}">{{Produto.nome_produto}}</a></th>
+        <th>{{Produto.descricao_produto}}</th>
+        <th>{{Produto.tipo_produto}}</th>
+        <th>{{Produto.user_produtor}}</th>
+      </tr>
+      <div class="pagination">
+        <span class="step-links">
+            {% if Produtos.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ Produtos.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ Produtos.number }} of {{ Produtos.paginator.num_pages }}.
+            </span>
+
+            {% if Produtos.has_next %}
+                <a href="?page={{ Produtos.next_page_number }}">next</a>
+                <a href="?page={{ Produtos.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
       {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

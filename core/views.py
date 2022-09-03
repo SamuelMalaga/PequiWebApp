@@ -1,5 +1,4 @@
 
-from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import Http404
 from django.contrib import messages
@@ -10,6 +9,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import EnderecoModelForm, ExtendedUserCreationForms, UserPequiForm, ProdutoModelForm, ContatoModelForm
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -142,6 +142,10 @@ def produto_submit(request):
   else:
     return redirect('index')
 
+def produto_detalhe(request, id):
+  produto= Produto.objects.get(id = id)
+  print(produto.descricao_produto)
+  return render(request, 'detalhe_produto.html', {'produto': produto})
 ##------> Registro de endereços
 
 def cadastro_endereco(request):
@@ -226,17 +230,32 @@ def contato_submit(request):
       return redirect(request, 'contato.html')
   else:
     return redirect('index')
-
+##------>Página de ajuda
+def ajuda(request):
+  return render(request, 'ajuda.html')
+##------>Sobre Nós
+def sobre(request):
+  return render(request, 'sobre.html')
+##------>Minha conta
+def minha_conta(request, id):
+  usuario = User.objects.get(id=id)
+  print(dir(usuario))
+  #usuario_pequi = usuario.usuario_pequi
+  return render(request, 'minha_conta.html',{'usuario': usuario})
 ##------> Home Page e debugger
 def index(request):
   produtos = Produto.objects.all()
 
   meuFiltro = ProdutoFilter(request.GET, queryset=produtos)
   produtos = meuFiltro.qs
+  paginator = Paginator(produtos, 2)
 
+  page_number = request.GET.get('page')
+  page_obj = paginator.get_page(page_number)
 
   context = {
-    "Produtos" : produtos,
+    "Produtos" : page_obj,
     "meuFiltro" : meuFiltro
   }
+  print(dir(page_obj))
   return render(request, 'index.html', context)
