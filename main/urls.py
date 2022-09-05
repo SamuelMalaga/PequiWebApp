@@ -21,7 +21,7 @@ from core.views import (
                         produto,produto_submit, cadastro_endereco,
                         endereco_submit, cadastro_contato,
                         contato_submit, produto_detalhe, ajuda,
-                        sobre, minha_conta
+                        sobre, minha_conta, submit_review
                         )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -44,10 +44,13 @@ urlpatterns = [
     path('registre/', registre, name='registre'),
     path('registre/submit/', create_usuario, name='create_usuario'),
 
-    #Criar produto e página do produto
+    #Criar produto
     path('produto/', produto, name='produto'),
     path('produto/submit', produto_submit, name='produto_submit'),
+
+    #Página do produto e avaliação do produto
     path('produto/<int:id>', produto_detalhe, name='produto_detalhe'),
+    path('submit_review/<int:id>/', submit_review, name='submit_review'),
 
     #Cadastrar endereco
     path('endereco/', cadastro_endereco, name='cadastro_endereco'),

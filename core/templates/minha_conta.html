@@ -5,5 +5,21 @@
     <h3>{{user.usuario_pequi.DOC_Usuario}}</h3>
     <h3>{{user.last_name}}</h3>
     <h3>{{user.last_login}}</h3>
+<table>
+    <tr>
+        <th>Nome do produto</th>
+        <th>Descrição</th>
+        <th>Tipo Produto</th>
+        <th>Produtor</th>
+      </tr>
+    {% for produto in produtos_usuario %}
+    <tr>
+        <th>{{produto.nome_produto}}</a></th>
+        <th>{{produto.descricao_produto}}</th>
+        <th>{{produto.tipo_produto}}</th>
+        <th>{{produto.user_produtor}}</th>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
 

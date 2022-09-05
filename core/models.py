@@ -84,3 +84,12 @@ class Contato(models.Model):
   email_contato = models.CharField('email_contato',null=True, max_length=225)
   is_wpp = models.BooleanField('is_wpp', null=True)
 
+class ProdutoReview(models.Model):
+  produto_rating = models.ForeignKey(Produto, on_delete=models.CASCADE)
+  usuario_rating = models.ForeignKey(User, on_delete=models.CASCADE)
+  texto_avaliacao = models.TextField('avaliacao', max_length=500, null=True)
+  nota_avaliacao = models.FloatField(null=True)
+  criado_em = models.DateTimeField(auto_now_add=True)
+
+
+
