@@ -1,5 +1,5 @@
 {% extends 'global_template.html' %}
-
+{% load templatehelpers %}
 {% block content %}
   <h1>Teste css</h1>
   {% if request.user.is_anonymous %}
@@ -25,7 +25,9 @@
   <h1> Pagina inicial <h1>
   <h2> Produtos </h2>
     <form method="get">
-      {{meuFiltro.form}}
+      {% with params=request.GET.urlencode %}
+        {{meuFiltro.form}}
+      {% endwith %}
       <button type="submit">Procurar</button>
     </form>
     <table>
@@ -42,11 +44,17 @@
         <th>{{Produto.tipo_produto}}</th>
         <th>{{Produto.user_produtor}}</th>
       </tr>
+      {% endfor %}
+    </table>
+    <ul class="pagination">
+      <h2>TESTETAG</h2>
+
+    </ul>
       <div class="pagination">
         <span class="step-links">
             {% if Produtos.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ Produtos.previous_page_number }}">previous</a>
+                <a href="{% relative_url 1 'page' request.GET.urlencode %}">&laquo; first</a>
+                <a href="{% relative_url Produtos.previous_page_number 'page' request.GET.urlencode %} ">previous</a>
             {% endif %}
 
             <span class="current">
@@ -54,11 +62,11 @@
             </span>
 
             {% if Produtos.has_next %}
-                <a href="?page={{ Produtos.next_page_number }}">next</a>
-                <a href="?page={{ Produtos.paginator.num_pages }}">last &raquo;</a>
+                <a href="{% relative_url Produtos.next_page_number 'page' request.GET.urlencode %}">next</a>
+                <a href="{% relative_url Produtos.paginator.num_pages 'page' request.GET.urlencode %}">last &raquo;</a>
             {% endif %}
         </span>
+
     </div>
-      {% endfor %}
     </table>
 {% endblock %}
