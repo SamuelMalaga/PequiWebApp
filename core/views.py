@@ -9,7 +9,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import EnderecoModelForm, ExtendedUserCreationForms, UserPequiForm, ProdutoModelForm, ContatoModelForm
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -244,18 +244,22 @@ def minha_conta(request, id):
   return render(request, 'minha_conta.html',{'usuario': usuario})
 ##------> Home Page e debugger
 def index(request):
-  produtos = Produto.objects.all()
+  produtos_list = Produto.objects.all()
+  produtos_filtro = ProdutoFilter(request.GET, queryset=produtos_list)
 
-  meuFiltro = ProdutoFilter(request.GET, queryset=produtos)
-  produtos = meuFiltro.qs
-  paginator = Paginator(produtos, 2)
-
+  paginator = Paginator(produtos_filtro.qs, 2)
   page_number = request.GET.get('page')
   page_obj = paginator.get_page(page_number)
-
+  try:
+        produtos = paginator.page(page_number)
+  except PageNotAnInteger:
+        produtos = paginator.page(1)
+  except EmptyPage:
+        produtos = paginator.page(paginator.num_pages)
   context = {
-    "Produtos" : page_obj,
-    "meuFiltro" : meuFiltro
+    "Produtos" : produtos,
+    "Page": page_obj,
+    "meuFiltro" : produtos_filtro
   }
-  print(dir(page_obj))
+  print(dir(page_obj.paginator))
   return render(request, 'index.html', context)
