@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Endereco, Usuario_pequi, Produto, Contato
+from .models import Endereco, Usuario_pequi, Produto, Contato, ProdutoReview
 
 
 
@@ -46,7 +46,14 @@ class EnderecoModelForm(forms.ModelForm):
     model = Endereco
     fields = ['rua_endereco','CEP_endereco', 'bairro_endereco', 'cidade_endereco', 'estado_endereco' ]
 
+#-----> Forms para o cadastro de contato
 class ContatoModelForm(forms.ModelForm):
   class Meta:
     model = Contato
     fields = ['telefone_contato','email_contato', 'is_wpp']
+
+#------> Forms para o registro do produto
+class ReviewForms(forms.ModelForm):
+  class Meta:
+    model = ProdutoReview
+    fields = ['texto_avaliacao', 'nota_avaliacao']

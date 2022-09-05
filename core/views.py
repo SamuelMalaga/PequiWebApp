@@ -1,15 +1,17 @@
 
-from django.shortcuts import render, HttpResponse, redirect
+from multiprocessing import context
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.http import Http404
 from django.contrib import messages
 
 from .filters import ProdutoFilter
-from .models import Produto, Usuario_pequi
+from .models import Produto, Usuario_pequi,ProdutoReview
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import EnderecoModelForm, ExtendedUserCreationForms, UserPequiForm, ProdutoModelForm, ContatoModelForm
+from .forms import EnderecoModelForm, ExtendedUserCreationForms, ReviewForms, UserPequiForm, ProdutoModelForm, ContatoModelForm
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -142,13 +144,44 @@ def produto_submit(request):
   else:
     return redirect('index')
 
+##------>Visualização de detalhes do produto e envio de review
 def produto_detalhe(request, id):
   produto= Produto.objects.get(id = id)
-  print(produto.descricao_produto)
-  return render(request, 'detalhe_produto.html', {'produto': produto})
+  # if request.method =='POST':
+  #   form = ReviewForms(request.POST, request.FILES)
+  #   if form.is_valid():
+  #     instance = form.save(commit=False)
+
+  #     instance.produto_rating = produto
+
+  #     instance.usuario_rating = request.user
+
+  #     instance.save()
+  #     messages.success(request, 'Review feita')
+  #   else:
+  #     messages.error(request, 'Erro ao salvar avaliacao')
+  # else:
+  #   form = ReviewForms()
+  context = {'produto': produto}
+  print('produto detalhe')
+  return render(request,'detalhe_produto.html', context)
+
+def submit_review(request, id):
+  url = request.META.get('HTTP_REFERER')
+  form = ReviewForms(request.POST)
+  if form.is_valid():
+    data = form.save(commit=False)
+    data.produto_rating = Produto.objects.get(id=id)
+    data.usuario_rating = request.user
+    data.texto_avaliacao = form.cleaned_data['texto_avaliacao']
+    data.nota_avaliacao = form.cleaned_data['nota_avaliacao']
+    data.save()
+    return redirect(url)
+
 ##------> Registro de endereços
 
 def cadastro_endereco(request):
+  print('cadastro endereco')
   if not request.user.is_authenticated:
     raise Http404
   if request.method == 'POST':
@@ -170,6 +203,7 @@ def cadastro_endereco(request):
   return render(request, 'produto.html', context)
 
 def endereco_submit(request):
+  print('endereco submit')
   if not request.user.is_authenticated:
     raise Http404
 
@@ -238,13 +272,19 @@ def sobre(request):
   return render(request, 'sobre.html')
 ##------>Minha conta
 def minha_conta(request, id):
-  usuario = User.objects.get(id=id)
-  print(dir(usuario))
-  #usuario_pequi = usuario.usuario_pequi
-  return render(request, 'minha_conta.html',{'usuario': usuario})
+  if not request.user.is_authenticated:
+    raise Http404
+  else:
+    usuario = User.objects.get(id=id)
+    meus_produtos = Produto.objects.filter(user_produtor__exact = usuario.id)
+    context = {
+      'usuario': usuario,
+      'produtos_usuario': meus_produtos
+    }
+  return render(request, 'minha_conta.html',context)
 ##------> Home Page e debugger
 def index(request):
-  produtos_list = Produto.objects.all()
+  produtos_list = Produto.objects.all().order_by('id')
   produtos_filtro = ProdutoFilter(request.GET, queryset=produtos_list)
 
   paginator = Paginator(produtos_filtro.qs, 2)
@@ -261,5 +301,4 @@ def index(request):
     "Page": page_obj,
     "meuFiltro" : produtos_filtro
   }
-  print(dir(page_obj.paginator))
   return render(request, 'index.html', context)
