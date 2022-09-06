@@ -5,12 +5,15 @@
     <h3>{{user.usuario_pequi.DOC_Usuario}}</h3>
     <h3>{{user.last_name}}</h3>
     <h3>{{user.last_login}}</h3>
+    <h2>Edite seus dados <a href="{% url 'alterar_dados_conta'%}">aqui</a> </h2>
+<h2>Produtos</h2>
 <table>
     <tr>
         <th>Nome do produto</th>
         <th>Descrição</th>
         <th>Tipo Produto</th>
         <th>Produtor</th>
+        <th>Editar Dados</th>
       </tr>
     {% for produto in produtos_usuario %}
     <tr>
@@ -18,6 +21,7 @@
         <th>{{produto.descricao_produto}}</th>
         <th>{{produto.tipo_produto}}</th>
         <th>{{produto.user_produtor}}</th>
+        <th><a href="{% url 'alterar_dados_produto' produto.id %}">Editar Produto</a> </th>
     </tr>
     {% endfor %}
 </table>
