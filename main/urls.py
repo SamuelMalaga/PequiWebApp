@@ -21,7 +21,8 @@ from core.views import (
                         produto,produto_submit, cadastro_endereco,
                         endereco_submit, cadastro_contato,
                         contato_submit, produto_detalhe, ajuda,
-                        sobre, minha_conta, submit_review
+                        sobre, minha_conta, submit_review,
+                        alterar_dados_conta, alterar_dados_produto
                         )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -62,9 +63,18 @@ urlpatterns = [
 
     #Página de ajuda
     path('ajuda/', ajuda, name='ajuda'),
+
     #Minha Conta
     path('usuario/<int:id>', minha_conta, name='minha_conta'),
+
+    #Alterar dados do cadastro
+    path('editar_cadastro/', alterar_dados_conta, name='alterar_dados_conta'),
+
+    #Alterar dados do produto
+    path('editar_produto/<int:produto_id>', alterar_dados_produto, name='alterar_dados_produto'),
+
     #Sobre nós
+    path('sobre/', sobre, name='sobre')
 
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

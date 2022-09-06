@@ -1,15 +1,14 @@
 
-from multiprocessing import context
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.http import Http404
 from django.contrib import messages
 
 from .filters import ProdutoFilter
-from .models import Produto, Usuario_pequi,ProdutoReview
+from .models import Contato, Produto, Usuario_pequi,ProdutoReview
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import EnderecoModelForm, ExtendedUserCreationForms, ReviewForms, UserPequiForm, ProdutoModelForm, ContatoModelForm
+from .forms import AtualizacaoCadastroForm, EnderecoModelForm, ExtendedUserCreationForms, ReviewForms, UserPequiForm, ProdutoModelForm, ContatoModelForm, AtualizacaoUserPequi
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -45,7 +44,6 @@ def registre(request):
 
   context = {'form' : form, 'pequi_user_form': pequi_user_form}
   return render(request, 'registre.html', context)
-  return render(request, 'registre.html')
 
 def create_usuario(request):
   if request.method == 'POST':
@@ -147,21 +145,6 @@ def produto_submit(request):
 ##------>Visualização de detalhes do produto e envio de review
 def produto_detalhe(request, id):
   produto= Produto.objects.get(id = id)
-  # if request.method =='POST':
-  #   form = ReviewForms(request.POST, request.FILES)
-  #   if form.is_valid():
-  #     instance = form.save(commit=False)
-
-  #     instance.produto_rating = produto
-
-  #     instance.usuario_rating = request.user
-
-  #     instance.save()
-  #     messages.success(request, 'Review feita')
-  #   else:
-  #     messages.error(request, 'Erro ao salvar avaliacao')
-  # else:
-  #   form = ReviewForms()
   context = {'produto': produto}
   print('produto detalhe')
   return render(request,'detalhe_produto.html', context)
@@ -176,6 +159,7 @@ def submit_review(request, id):
     data.texto_avaliacao = form.cleaned_data['texto_avaliacao']
     data.nota_avaliacao = form.cleaned_data['nota_avaliacao']
     data.save()
+    messages.success(request, 'Review feita!')
     return redirect(url)
 
 ##------> Registro de endereços
@@ -277,11 +261,46 @@ def minha_conta(request, id):
   else:
     usuario = User.objects.get(id=id)
     meus_produtos = Produto.objects.filter(user_produtor__exact = usuario.id)
+    meus_contatos = Contato.objects.filter(user_contato__exact = usuario.id)
     context = {
       'usuario': usuario,
-      'produtos_usuario': meus_produtos
+      'produtos_usuario': meus_produtos,
+      'meus_contatos' : meus_contatos
     }
   return render(request, 'minha_conta.html',context)
+
+def alterar_dados_conta(request):
+  user_ref = request.user
+  form_user = AtualizacaoCadastroForm(instance=request.user)
+  form_user_pequi = UserPequiForm(instance=request.user.usuario_pequi)
+  if request.method == 'POST':
+    form_user = AtualizacaoCadastroForm(request.POST,instance=request.user)
+    form_user_pequi = UserPequiForm(request.POST,instance=request.user.usuario_pequi)
+
+    if form_user.is_valid() and form_user_pequi.is_valid():
+      form_user.save()
+      form_user_pequi.save()
+  context = {'form': form_user, 'form_user_pequi': form_user_pequi, 'user_ref': user_ref }
+  return render(request, 'editar_cadastro.html', context)
+
+def alterar_dados_produto(request, produto_id):
+  user_ref=request.user
+  produto= Produto.objects.get(id = produto_id)
+  form_produto = ProdutoModelForm(instance=produto)
+  if request.method =='POST':
+    form_produto = ProdutoModelForm(request.POST, instance=produto)
+    if form_produto.is_valid():
+      form_produto.save()
+  context = {
+    'form_produto' : form_produto,
+    'produto': produto,
+    'user_ref': user_ref
+  }
+  return render(request, 'editar_produto.html', context)
+
+
+
+
 ##------> Home Page e debugger
 def index(request):
   produtos_list = Produto.objects.all().order_by('id')

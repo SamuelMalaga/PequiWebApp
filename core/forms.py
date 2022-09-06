@@ -1,7 +1,7 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Endereco, Usuario_pequi, Produto, Contato, ProdutoReview
 
 
@@ -28,6 +28,18 @@ class ExtendedUserCreationForms(UserCreationForm):
       return user
 
 class UserPequiForm(forms.ModelForm):
+  class Meta:
+    model = Usuario_pequi
+    fields = ('data_nascimento_usuario', 'DOC_Usuario', 'is_CNPJ', 'is_Produtor')
+
+
+#------->Formulários para atualização de dados cadastrais
+class AtualizacaoCadastroForm(UserChangeForm):
+  class Meta:
+    model = User
+    fields = ('first_name', 'last_name','username', 'email' )
+
+class AtualizacaoUserPequi(forms.ModelForm):
   class Meta:
     model = Usuario_pequi
     fields = ('data_nascimento_usuario', 'DOC_Usuario', 'is_CNPJ', 'is_Produtor')

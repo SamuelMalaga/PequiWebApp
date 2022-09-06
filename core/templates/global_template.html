@@ -1,4 +1,6 @@
 {% load static %}
+{% load bootstrap5 %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,14 +15,14 @@
     <nav>
         <span id="header">
             <ul class="menu">
-              <li><a href="sobre.html">Sobre</a></li>
+              <li><a href="/sobre/">Sobre</a></li>
               {% if request.user.is_authenticated %}
               <li><a href="{% url 'minha_conta' id=user.id %}">minha conta</a></li>
               {% endif %}
               <li><a href="/registre/">Cadastre-se</a></li>
               <li><a href="/login/">Login</a></li>
-              <li><a href="contato.html">Contato</a></li>
-              <li><a href="ajuda.html">Ajuda</a></li>
+              <li><a href='contato/'>Contato</a></li>
+              <li><a href='/ajuda/'>Ajuda</a></li>
             </ul>
         </span>
       </nav>
