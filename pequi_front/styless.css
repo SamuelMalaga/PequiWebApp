@@ -73,20 +73,20 @@ input{
 
 footer {
   position: absolute;
-  width: 100%;
   bottom: 0;
   right: 0;
   background: #301445;
   color: white;
-  height: 50px;
   text-align: center;
-  line-height: 100px;
+  line-height: 40px;
 }
 
 footer {
   position: relative;
   bottom:0;
   left:0;
+  height: 10%;
+  width: 100%;
 
 }
 
@@ -94,11 +94,10 @@ footer {
   text-align: center;
   font-size: 12px;
   font-family: 'Times New Roman', Times, serif;
-  height: 30%;
-  width: 100%;
   text-align: center;
   background: #301445;
   color: white;
+
 }
 
 .imginicial{
@@ -116,59 +115,67 @@ footer {
 }
 
 .sobreapp{
-  width: 250px;
-  height: 320px;
+  width: 350px;
+  height: 420px;
   background-color: #68BC98;
   float: left;
   margin: 80px 20px;
   align-items: baseline;
   text-align: center;
+  border-radius: 4%;
+  border: solid 1px #000;
 
 }
 
 .missaoapp{
-  width: 250px;
-  height: 320px;
+  width: 350px;
+  height: 420px;
   background-color: #FCA965;
   float: left;
   margin: 80px 20px;
   align-items: baseline;
   text-align: center;
+  border-radius: 4%;
+  border: solid 1px #000;
 }
 
 .organicoapp{
-  width: 250px;
-  height: 320px;
+  width: 350px;
+  height: 420px;
   background-color: #68BC98;
   float: left;
   margin: 80px 20px;
   align-items: baseline;
   text-align: center;
+  border-radius: 4%;
+  border: solid 1px #000;
 }
 
-/* .produto{
-  width: 200px;
+section img {
+  width: 300px;
   height: 300px;
-  background-color: #68BC98;
-  float: left;
-  margin: 80px 20px;
-  align-items: baseline;
-  text-align: center;
-} */
+}
 
-/* div.produto {
-  float: right;
-  width: 25%;
-  border: thin silver solid;
-  margin: 0.5em;
-  padding: 0.5em;
+.inicio{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 80px;
+  justify-content: space-around;
 }
-div.produto p {
-  text-align: center;
-  font-style: italic;
-  font-size: smaller;
-  text-indent: 0;
+
+.produtos{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 80px;
 }
-img.escala {
-  width: 100%;
-} */
+
+.produto{
+  margin-bottom: 20px;
+}
+.produto p{
+  background: ;
+  color: ;
+  font-family: verdana;
+  padding: 5px 10px;
+}
