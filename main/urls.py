@@ -15,22 +15,67 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import index, login_user, login_submit, registre, create_usuario, logout_user, produto,produto_submit
+from core.views import (
+                        index, login_user, login_submit,
+                        registre,create_usuario, logout_user,
+                        produto,produto_submit, cadastro_endereco,
+                        endereco_submit, cadastro_contato,
+                        contato_submit, produto_detalhe, ajuda,
+                        sobre, minha_conta, submit_review,
+                        alterar_dados_conta, alterar_dados_produto
+                        )
 from django.conf import settings
 from django.conf.urls.static import static
 
-
+app_name = 'core'
 
 urlpatterns = [
+    #pagina admin
     path('admin/', admin.site.urls),
+
+    #Página inicial
     path('', index),
+
+    #Login e logout
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
     path('login/submit/', login_submit, name='login_submit'),
+
+    #Cadastro
     path('registre/', registre, name='registre'),
     path('registre/submit/', create_usuario, name='create_usuario'),
+
+    #Criar produto
     path('produto/', produto, name='produto'),
-    path('produto/submit', produto_submit, name='produto_submit')
+    path('produto/submit', produto_submit, name='produto_submit'),
+
+    #Página do produto e avaliação do produto
+    path('produto/<int:id>', produto_detalhe, name='produto_detalhe'),
+    path('submit_review/<int:id>/', submit_review, name='submit_review'),
+
+    #Cadastrar endereco
+    path('endereco/', cadastro_endereco, name='cadastro_endereco'),
+    path('endereco/submit', endereco_submit, name='endereco_submit'),
+
+    #Cadastrar contato
+    path('contato/', cadastro_contato, name='cadastro_contato'),
+    path('contato/submit', contato_submit, name='contato_submit'),
+
+    #Página de ajuda
+    path('ajuda/', ajuda, name='ajuda'),
+
+    #Minha Conta
+    path('usuario/<int:id>', minha_conta, name='minha_conta'),
+
+    #Alterar dados do cadastro
+    path('editar_cadastro/', alterar_dados_conta, name='alterar_dados_conta'),
+
+    #Alterar dados do produto
+    path('editar_produto/<int:produto_id>', alterar_dados_produto, name='alterar_dados_produto'),
+
+    #Sobre nós
+    path('sobre/', sobre, name='sobre')
 
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+

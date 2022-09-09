@@ -1,17 +1,9 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <title>Document</title>
-</head>
-<body>
+{% extends 'global_template.html' %}
+{% load templatehelpers %}
+{% block content %}
+  <h1>Teste css</h1>
   {% if request.user.is_anonymous %}
         <h2> Faça o login <h2>
-        <h2><a href="/login/"> Login! </a> </h2>
         <h2> Ou cadastre-se <h2>
         <h2><a href="/registre/submit"> Cadastro! </a> </h2>
   {% else %}
@@ -23,11 +15,58 @@
         <h3> CNPJ? {{user.usuario_pequi.is_CNPJ}} <h3>
         <h3> ID pequi_usuario {{user.usuario_pequi.user_id}} <h3>
         <h3> Data nascimento {{user.usuario_pequi.data_nascimento_usuario}}<h3>
+        <h3> Cadastre o endereco<a href="/endereco/"> Aqui </a><h3>
+        <h3> Cadastre o Contato<a href="/contato/"> Aqui </a><h3>
           {%if user.usuario_pequi.is_Produtor%}
-            <h2> Cadastre o produto aqui </h2>
+            <h2> Cadastre o produto <a href="/produto/"> Aqui </a> </h2>
           {% endif%}
         <h2><a href="/logout/">Sair </a></h2>
   {% endif %}
   <h1> Pagina inicial <h1>
-</body>
-</html>
+  <h2> Produtos </h2>
+    <form method="get">
+      {% with params=request.GET.urlencode %}
+        {{meuFiltro.form}}
+      {% endwith %}
+      <button type="submit">Procurar</button>
+    </form>
+    <table>
+      <tr>
+        <th>Nome do produto</th>
+        <th>Descrição</th>
+        <th>Tipo Produto</th>
+        <th>Produtor</th>
+      </tr>
+      {% for Produto in Produtos %}
+      <tr>
+        <th><a href= "{% url 'produto_detalhe' Produto.id %}">{{Produto.nome_produto}}</a></th>
+        <th>{{Produto.descricao_produto}}</th>
+        <th>{{Produto.tipo_produto}}</th>
+        <th>{{Produto.user_produtor}}</th>
+      </tr>
+      {% endfor %}
+    </table>
+    <ul class="pagination">
+      <h2>TESTETAG</h2>
+
+    </ul>
+      <div class="pagination">
+        <span class="step-links">
+            {% if Produtos.has_previous %}
+                <a href="{% relative_url 1 'page' request.GET.urlencode %}">&laquo; first</a>
+                <a href="{% relative_url Produtos.previous_page_number 'page' request.GET.urlencode %} ">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ Produtos.number }} of {{ Produtos.paginator.num_pages }}.
+            </span>
+
+            {% if Produtos.has_next %}
+                <a href="{% relative_url Produtos.next_page_number 'page' request.GET.urlencode %}">next</a>
+                <a href="{% relative_url Produtos.paginator.num_pages 'page' request.GET.urlencode %}">last &raquo;</a>
+            {% endif %}
+        </span>
+
+    </div>
+    </table>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'global_template.html' %}
+{% block content %}
+  <h1>Produto</h1>
+  {% if request.user.is_anonymous %}
+    <h2> Faça o login registrar um endereco </h2>
+  {% else %}
+  <form action="submit" method="post">
+    {%  csrf_token  %}
+    {{form.as_p}}
+    <input type="submit" value="Submit"><br>
+  </form>
+  {% endif %}
+{% endblock %}
+

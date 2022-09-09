@@ -1,0 +1,19 @@
+{% extends 'global_template.html' %}
+{% load bootstrap5 %}
+{% block content%}
+<body>
+  <div class="container">
+    <h1> Atualize seu cadastro </h1>
+    <h2> Fora da tag </h2>
+    <form action="{% url 'alterar_dados_conta' %}" method= "POST" >
+      <h2> Dentro da tag </h2>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {{ form_user.as_p }}
+        {{ form_user_pequi.as_p }}
+        <input type="submit" class="btn btn-primary" value="Atualizar"><br>
+    </form>
+    <h2><a href="{% url 'minha_conta' id=user_ref.id %}">voltar</a><h2>
+    <h2><a href="/"> Inicio! </a> </h2>
+  </div>
+{% endblock%}

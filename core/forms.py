@@ -1,9 +1,9 @@
 
-from dataclasses import fields
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from .models import Usuario_pequi, Produto
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import Endereco, Usuario_pequi, Produto, Contato, ProdutoReview
+
 
 
 #---->Formulários para criação de usuário pequi, classe base de Usuário do django e atributos estendidos
@@ -32,10 +32,40 @@ class UserPequiForm(forms.ModelForm):
     model = Usuario_pequi
     fields = ('data_nascimento_usuario', 'DOC_Usuario', 'is_CNPJ', 'is_Produtor')
 
-#----->Forms para o cadastro de produtos
 
+#------->Formulários para atualização de dados cadastrais
+class AtualizacaoCadastroForm(UserChangeForm):
+  class Meta:
+    model = User
+    fields = ('first_name', 'last_name','username', 'email' )
+
+class AtualizacaoUserPequi(forms.ModelForm):
+  class Meta:
+    model = Usuario_pequi
+    fields = ('data_nascimento_usuario', 'DOC_Usuario', 'is_CNPJ', 'is_Produtor')
+
+#----->Forms para o cadastro de produtos
+##------> Ajustar o tipo de produto para dropdown
 class ProdutoModelForm(forms.ModelForm):
 
   class Meta:
     model = Produto
     fields = ['nome_produto', 'preco_produto', 'descricao_produto', 'quantidade_produto', 'imagem_produto', 'tipo_produto']
+
+#----->Forms para o cadastro de enderecos
+class EnderecoModelForm(forms.ModelForm):
+  class Meta:
+    model = Endereco
+    fields = ['rua_endereco','CEP_endereco', 'bairro_endereco', 'cidade_endereco', 'estado_endereco' ]
+
+#-----> Forms para o cadastro de contato
+class ContatoModelForm(forms.ModelForm):
+  class Meta:
+    model = Contato
+    fields = ['telefone_contato','email_contato', 'is_wpp']
+
+#------> Forms para o registro do produto
+class ReviewForms(forms.ModelForm):
+  class Meta:
+    model = ProdutoReview
+    fields = ['texto_avaliacao', 'nota_avaliacao']

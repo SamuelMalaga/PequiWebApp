@@ -5,6 +5,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 # Create your models here.
 
+#Ao apresentar tirar todos os null=True e recriar as db's
+
 class Usuario_pequi(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -17,6 +19,14 @@ class Usuario_pequi(models.Model):
     return self.user.username
 
 
+PRODUTO_CHOICES = [
+  ('alimento', 'Alimento'),
+  ('bebidas', 'Bebida'),
+  ('cosmetico', 'Cosmetico'),
+  ('vestimenta', 'Vestimenta'),
+  ('outros','Outros')
+]
+
 class Produto(models.Model):
 
   user_produtor = models.ForeignKey(User,default=None , null=True, on_delete=models.CASCADE)
@@ -26,28 +36,60 @@ class Produto(models.Model):
   descricao_produto = models.CharField('descricao_produto',max_length=225, blank=True, null=True )
   quantidade_produto = models.DecimalField('quantidade_produto',decimal_places=2, max_digits=15, null=True)
   imagem_produto = models.ImageField('imagem_produto', blank=True, null=True, upload_to="core")
-  tipo_produto = models.CharField('tipo_produto', max_length=200, null=True)
-
+  tipo_produto = models.CharField('tipo_produto', max_length=200,choices=PRODUTO_CHOICES, null=True)
+  #Restringir a quantidade do produto por lista com kg, g, unidade, peça e etc....
   def __str__(self) -> str:
      return self.nome_produto
-
+ESTADO_CHOICES = [
+  ('AC','Acre'),
+  ('AL','Alagoas'),
+  ('AP','Amapá'),
+  ('AM','Amazonas'),
+  ('BA','Bahia'),
+  ('CE','Ceará'),
+  ('DF','Distrito Federal'),
+  ('ES','Espírito Santo'),
+  ('GO','Goiás'),
+  ('MA','Maranhão'),
+  ('MT','Mato Grosso'),
+  ('MS','Mato Grosso do Sul'),
+  ('MG','Minas Gerais'),
+  ('PA','Pará'),
+  ('PB','Paraíba'),
+  ('PR','Paraná'),
+  ('PE','Pernambuco'),
+  ('PI','Piauí'),
+  ('RJ','Rio de Janeiro'),
+  ('RN','Rio Grande do Norte'),
+  ('RS','Rio Grande do Sul'),
+  ('RO','Rondônia'),
+  ('RR','Roraima'),
+  ('SC','Santa Catarina'),
+  ('SP','São Paulo'),
+  ('SE','Sergipe'),
+  ('TO','Tocantins')
+]
 class Endereco(models.Model):
-  # rua_endereco = models.CharField('rua_endereco', max_length=225)
-  # CEP_endereco = models.CharField('CEP_endereco', max_length=225)
-  # bairro_endereco = models.CharField('bairro_endereco', max_length=225)
-  # cidade_endereco = models.CharField('cidade_endereco', max_length=225)
-  # estado_endereco = models.CharField('estado_endereco', max_length=225)
-  # ID_usuario_endereco = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
+  user_endereco = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+  rua_endereco = models.CharField('rua_endereco', max_length=225, null=True)
+  CEP_endereco = models.CharField('CEP_endereco', max_length=225, null=True)
+  bairro_endereco = models.CharField('bairro_endereco', max_length=225, null=True)
+  cidade_endereco = models.CharField('cidade_endereco', max_length=225, null=True)
+  estado_endereco = models.CharField('estado_endereco', max_length=225,choices=ESTADO_CHOICES, null=True)
 
-  #def __str__(self) -> str:
-  #  return self.nome_produto
-  pass
+
 class Contato(models.Model):
-  # telefone_contato = models.CharField('telefone_contato', max_length=225)
-  # email_contato = models.CharField('email_contato', max_length=225)
-  # is_wpp = models.BooleanField('is_wpp')
-  # ID_usuario_contato = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
+  user_contato = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+  telefone_contato = models.CharField('telefone_contato',null=True, max_length=225)
+  email_contato = models.CharField('email_contato',null=True, max_length=225)
+  is_wpp = models.BooleanField('is_wpp', null=True)
 
-  #def __str__(self) -> str:
-  #  return self.nome_produto
-  pass
+class ProdutoReview(models.Model):
+  produto_rating = models.ForeignKey(Produto, on_delete=models.CASCADE)
+  usuario_rating = models.ForeignKey(User, on_delete=models.CASCADE)
+  texto_avaliacao = models.TextField('avaliacao', max_length=500, null=True)
+  nota_avaliacao = models.FloatField(null=True)
+  criado_em = models.DateTimeField(auto_now_add=True)
+
+
+
