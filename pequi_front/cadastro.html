@@ -11,78 +11,86 @@
   <header>
     <img sstyle="position:absolute; right:10px; top:70px" src="pequi.png" alt="Logo"  width="100%" height="100%">
     <nav>
-        <span id="header">
-            <ul class="menu">
-              <li><a href="sobre.html">Sobre</a></li>
-              <li><a href="produtos.html">Produtos</a></li>
-              <li><a href="cadastro.html">Cadastre-se</a></li>
-              <li><a href="login.html">Login</a></li>
-              <li><a href="contato.html">Contato</a></li>
-              <li><a href="ajuda.html">Ajuda</a></li> 
-            </ul>
-        </span>
-      </nav>
+      <span id="header">
+        <ul class="menu">
+          <li><a href="ajuda.html" style="color: #EDEDED; text-decoration-line: none">Ajuda</a></li>
+          <li><a href="sobre.html" style="color: #EDEDED; text-decoration-line: none">Sobre</a></li>
+          <li><a href="contato.html" style="color: #EDEDED; text-decoration-line: none">Contato</a></li>
+          <li><a href="produtos.html" style="color: #EDEDED; text-decoration-line: none">Produtos</a></li>
+          <li><a href="cadastro.html" style="color: #EDEDED; text-decoration-line: none">Cadastre-se</a></li>
+          <li><a href="login.html" style="color: #EDEDED; text-decoration-line: none">Login</a></li>
+          <li><a href="Principal.html" style="color: #EDEDED; text-decoration-line: none">Home</a></li>
+        </ul>
+      </span>
+    </nav>
 </header>
-  <!--FORMULÁRIO DE CADASTRO-->
-  <div id="cadastro">
-    <form method="post" action=""> 
-      <h1>Cadastro</h1> 
-       
-      <p>
-        <select name="pf_pj" id="" >
-            <option value="PF">Pessoa Física</option>
-            <option value="PJ">Pessoa Jurídica</option>
-        </select>
-      </p>
+  <div class="formcadastro">
+    <!--FORMULÁRIO DE CADASTRO-->
+    <div id="cadastro">
+      <form method="post" action="">
+        <h1>Cadastro</h1>
 
-      <p> 
-        <label for="CPF/CNPJ_cad">CPF / CNPJ</label>
-        <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="cpf/cnpj" />
-      </p>
+        <p>
+          <select name="pf_pj" id="" >
+              <option value="PF">Pessoa Física</option>
+              <option value="PJ">Pessoa Jurídica</option>
+          </select>
+        </p>
 
-      <p> 
-        <label for="nome_cad">Nome / Razão Social</label>
-        <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="nome" />
-      </p>
-      
-      <p> 
-        <label for="email_cad">Seu e-mail</label>
-        <input id="email_cad" name="email_cad" required="required" type="email" placeholder="contato@pequi.com"/> 
-      </p>
-       
-      <p> 
-        <label for="senha_cad">Sua senha</label>
-        <input id="senha_cad" name="senha_cad" required="required" type="password" placeholder="ex. @1234*"/>
-      </p>
-      
-      <p> 
-        <label for="rua_cad">Rua:  nº comp.:  </label>
-        <input id="rua_cad" name="rua_cad" required="required" type="text" placeholder="Endereço" />
-      </p>
+        <p>
+          <label for="CPF/CNPJ_cad">CPF / CNPJ</label>
+          <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="cpf/cnpj" />
+        </p>
 
-      <p> 
-        <label for="nome_cad">Nome / Razão Social</label>
-        <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="nome" />
-      </p>
-      <p class="checkbox"> 
-        <input type="checkbox" name="fornecedor" id="fornecedor" value="" /> 
-        <label for="manterlogado">Sou fornecedor</label>
-      </p>
+        <p>
+          <label for="nome_cad">Nome / Razão Social</label>
+          <input id="nome_cad" name="nome_cad" required="required" type="text" placeholder="nome" />
+        </p>
 
-      <p> 
-        <input type="submit" value="Cadastrar"/> 
-      </p>
-       
-      <p class="link">  
-        Já tem conta?
-        <a href="login.html"> Ir para Login </a>
-      </p>
-    </form>
+        <p>
+          <label for="email_cad">Seu e-mail</label>
+          <input id="email_cad" name="email_cad" required="required" type="email" placeholder="contato@pequi.com"/>
+        </p>
+
+        <p>
+          <label for="senha_cad">Sua senha</label>
+          <input id="senha_cad" name="senha_cad" required="required" type="password" placeholder="ex. @1234*"/>
+        </p>
+        <form>
+          Data de nascimento: <input type="date" name="nascimento">
+      </form>
+        <p class="endinline">
+          <label for="rua_cad">Rua: </label>
+          <input id="rua_cad" name="rua_cad" required="required" type="text" placeholder="Endereço" />
+          <label for="rua_cad">nº: </label>
+          <input id="rua_cad" name="rua_cad" required="required" type="text" placeholder="Endereço" />
+        </p>
+
+        <form>
+          Telefone: <input type="tel" name="usertel">
+      </form><br><br>
+
+        <form class="checkbox">
+          <input type="checkbox" name="sou_fornecedor" id="fornecedor" value="fornecedor" style="height: 15px; width: 100px; font-size: 14px;">Sou fornecedor
+        </form><br>
+
+        <form>
+          <input type="button" value="Cadastrar" onclick="msg()" style="background-color:#E97051; color: #EDEDED; height: 25px; width: 100px;">
+        </form><br>
+
+        <p class="link">
+          Já tem conta?
+          <a href="login.html"> Ir para Login </a>
+        </p><br>
+      </form>
+    </div>
   </div>
 </body>
 <footer>
-  <p class="rodape"> Desenvolvido por: Ana Vieira, Angélica Santos, Arthur Martins Coimbra, Samuel Malaga  <br>
-      &copy; 2022 - DCC apresentado para conclusão do curso Fellowship de Dev Web - Sirius Educação <br>
-  </p>
+  <div class="rodape">
+    <p> Desenvolvido por: Ana Vieira, Angélica Santos, Arthur Martins Coimbra, Samuel Malaga  <br>
+        &copy; 2022 - DCC apresentado para conclusão do curso Fellowship de Dev Web - Sirius Educação <br>
+    </p>
+  </div>
 </footer>
 </html>
