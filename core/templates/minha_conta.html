@@ -1,11 +1,49 @@
 {% extends 'global_template.html' %}
 {% block content %}
+
+    <div class="perfil_container">
+        <div class="perfil_info">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">{{user.first_name}}</li>
+                  <li class="list-group-item">{{user.last_name}}</li>
+                  <li class="list-group-item">{{user.usuario_pequi.DOC_Usuario}}</li>
+                  <li class="list-group-item">{{user.last_login}}</li>
+                  <li class="list-group-item">A second item</li>
+                  <li class="list-group-item">A third item</li>
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                </div>
+              </div>
+
+        </div>
+        <div class="perfil_items">
+            <div class="perfil_items_contatos">
+
+            </div>
+            <div class="perfil_items_produtos">
+
+            </div>
+
+        </div>
+    </div>
     <h2>Minha conta</h2>
     <h3>{{user.first_name}}</h3>
     <h3>{{user.usuario_pequi.DOC_Usuario}}</h3>
     <h3>{{user.last_name}}</h3>
     <h3>{{user.last_login}}</h3>
     <h2>Edite seus dados <a href="{% url 'alterar_dados_conta'%}">aqui</a> </h2>
+    <h3> Cadastre o endereco<a href="/endereco/"> Aqui </a><h3>
+    <h3> Cadastre o Contato<a href="/contato/"> Aqui </a><h3>
+        {%if user.usuario_pequi.is_Produtor%}
+            <h2> Cadastre o produto <a href="/produto/"> Aqui </a> </h2>
+        {% endif%}
 <h2>Produtos</h2>
 <table>
     <tr>
@@ -14,6 +52,7 @@
         <th>Tipo Produto</th>
         <th>Produtor</th>
         <th>Editar Dados</th>
+        <th>Remover Produto</th>
       </tr>
     {% for produto in produtos_usuario %}
     <tr>
@@ -22,6 +61,7 @@
         <th>{{produto.tipo_produto}}</th>
         <th>{{produto.user_produtor}}</th>
         <th><a href="{% url 'alterar_dados_produto' produto.id %}">Editar Produto</a> </th>
+        <th><a href="{% url 'remover_produto' produto.id %}">Remover Produto</a> </th>
     </tr>
     {% endfor %}
 </table>

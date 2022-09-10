@@ -7,10 +7,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="{% static 'css\styles.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'css\styles.css' %}">
   <title>Pequi</title>
 </head>
-  <header>
+  {% comment %} <header> -----------------------------------------------------------------> Header Antigo
     <img src={% static 'img/logo.png' %} alt="Logo"  width="100%" height="100%">
     <nav>
         <span id="header">
@@ -22,13 +23,56 @@
               <li><a href="/registre/">Cadastre-se</a></li>
               <li><a href="/login/">Login</a></li>
               <li><a href='contato/'>Contato</a></li>
-              <li><a href='/ajuda/'>Ajuda</a></li>
+              <li><a href='/ajuda'>Ajuda</a></li>
             </ul>
         </span>
       </nav>
+  </header> -----------------------------------------------------------------> Header Antigo {% endcomment %}
+  <header>
+    <img sstyle="position:absolute; right:10px; top:70px" src={% static 'img/pequi.png' %} alt="Logo"  width="100%" height="100%">
+      <nav>
+        <span id="header">
+          <ul class="menu">
+            {% comment %} Adicionar Link de ajuda {% endcomment %}
+            <li><a href="ajuda.html" style="color: #EDEDED; text-decoration-line: none">Ajuda?</a></li>
+            {% comment %} Adicionar Link de Sobre {% endcomment %}
+            <li><a href="sobre.html" style="color: #EDEDED; text-decoration-line: none">Sobre?</a></li>
+            {% comment %} Adicionar Link de Contato? (não vai ser necessário) {% endcomment %}
+            <li><a href="contato.html" style="color: #EDEDED; text-decoration-line: none">Contato?</a></li>
+            {% comment %} Adicionar Link de Produtos  {% endcomment %}
+            <li><a href="/produtos/" style="color: #EDEDED; text-decoration-line: none">Produtos</a></li>
+            {% comment %} Adicionar Link de Cadastre-se  {% endcomment %}
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'minha_conta' id=user.id %}" style="color: #EDEDED; text-decoration-line: none">Minha Conta</a></li>
+            {% else %}
+            <li><a href="/registre/" style="color: #EDEDED; text-decoration-line: none">Cadastre-se</a></li>
+            {% endif %}
+            {% comment %} Colocar a condicional do minha conta {% endcomment %}
+            {% comment %} Link para o Login {% endcomment %}
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'logout' %}" style="color: #EDEDED; text-decoration-line: none">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}" style="color: #EDEDED; text-decoration-line: none">Login</a></li>
+            {% endif %}
+            {% comment %} Link para o Home(index) {% endcomment %}
+            <li><a href="{% url 'pagina_inicial' %}" style="color: #EDEDED; text-decoration-line: none">Home</a></li>
+            {% comment %} Carrinho
+            <li><a href="#" id="cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge"></span></a></li>
+            {% endcomment %}
+          </ul>
+        </span>
+    </nav>
   </header>
   <body>
     {% block content %}
     {% endblock %}
+
   </body>
-</html>
+  <footer>
+    <p class="rodape"> Desenvolvido por: Ana Vieira, Angélica Santos, Arthur Martins Coimbra, Samuel Malaga  <br>
+      &copy; 2022 - DCC apresentado para conclusão do curso Fellowship de Dev Web - Sirius Educação
+    </p>
+    </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </html>

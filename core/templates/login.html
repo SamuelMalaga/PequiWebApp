@@ -1,14 +1,20 @@
 {% extends 'global_template.html' %}
 
 {% block content %}
-  <div id='login' class="container">
     <h1> Login </h1>
-    <form action="/login/submit/" method= "post" class="form" autocomplete="off" enctype="multipart/form-data">
+    <form action="{% url 'login_submit' %}" class="form" autocomplete="off" enctype="multipart/form-data" method= "POST" style="display: flex; justify-content:center" >
+      <div class="form-control form-control-sm w-75" >
         {% csrf_token %}
-        <label for="usuario"> Usuario</label><br>
+        <label for="usuario" class="form-label">Usuario</label>
+        <input type="text" name="usuario" value="" class="form-control" id="exampleFormControlInput1" placeholder="Seu Usuario">
+        <label for="exampleFormControlInput1" class="form-label">Senha</label>
+        <input type="password" name="senha" class="form-control" id="exampleFormControlInput1" placeholder="Sua Senha">
+        {% comment %} <label for="usuario"> Usuario</label><br>
         <input type="text" name="usuario" value=""><br>
         <label for="senha"> Senha</label><br>
-        <input type="password" name="senha" value=""><br>
-        <input type="submit" class="btn btn-primary" value="Submit"><br>
-  </div>
+        <input type="password" name="senha" value=""><br>{% endcomment %}
+        <input type="submit" class="btn btn-primary" value="Login"><br>
+      </div>
+    </form>
 {% endblock %}
+

@@ -22,7 +22,8 @@ from core.views import (
                         endereco_submit, cadastro_contato,
                         contato_submit, produto_detalhe, ajuda,
                         sobre, minha_conta, submit_review,
-                        alterar_dados_conta, alterar_dados_produto
+                        alterar_dados_conta, alterar_dados_produto, remover_produto,
+                        pagina_produtos
                         )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -34,7 +35,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     #Página inicial
-    path('', index),
+    path('', index, name='pagina_inicial'),
+
+    #Página Produtos
+    path('produtos/', pagina_produtos, name='pagina_produtos'),
 
     #Login e logout
     path('login/', login_user, name='login'),
@@ -72,6 +76,9 @@ urlpatterns = [
 
     #Alterar dados do produto
     path('editar_produto/<int:produto_id>', alterar_dados_produto, name='alterar_dados_produto'),
+
+    #Remover Produto
+    path('remover_produto/<int:produto_id>', remover_produto, name='remover_produto'),
 
     #Sobre nós
     path('sobre/', sobre, name='sobre')
