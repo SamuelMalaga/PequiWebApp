@@ -1,0 +1,105 @@
+{% extends 'global_template.html' %}
+{% load templatehelpers %}
+{% load static %}
+{% block content %}
+  <h1>Teste css</h1>
+  <h1> Pagina inicial <h1>
+    <div class="filter_pagination">
+      <div class="produto_filter">
+        <form method="get">
+          {% with params=request.GET.urlencode %}
+            {{meuFiltro.form}}
+          {% endwith %}
+          <button type="submit">Procurar</button>
+        </form>
+      </div>
+    </div>
+    <div class='produto_display'>
+      {% for Produto in Produtos %}
+      <div class="card" style="width: 18rem;">
+        <img src="{% static 'img/mel.webp' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{Produto.nome_produto}}</h5>
+          <p class="card-text">{{Produto.descricao_produto}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{Produto.tipo_produto}}</li>
+          <li class="list-group-item">Produtor: {{Produto.user_produtor}}</li>
+          <li class="list-group-item">R${{Produto.preco_produto}}</li>
+        </ul>
+        <div class="card-body">
+          <button type="button" class="btn btn-outline-primary"><a href= "{% url 'produto_detalhe' Produto.id %}" class="card-link">Detalhes</a></button>
+          <button type="button" class="btn btn-outline-primary"><a href="#" class="card-link">Contato</a></button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="filter_pagination">
+      <div class="produto_pagination">
+        <nav class='pagination_menu'aria-label="Page navigation example">
+          <ul class="pagination justify-content-center" style="margin:0">
+            {% if Produtos.has_previous %}
+            <li class="page-item"><a class="page-link" href="{% relative_url 1 'page' request.GET.urlencode %}" >Anterior</a></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="#" >Anterior</a></li>
+            {% endif %}
+            <span class="current" style="font-size: 20px; padding-top:1%">
+              Page {{ Produtos.number }} of {{ Produtos.paginator.num_pages }}
+            </span>
+            {% if Produtos.has_next %}
+            <li class="page-item"><a class="page-link"  href="{% relative_url Produtos.next_page_number 'page' request.GET.urlencode %}">Próxima</a></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="#" >Próxima</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+    {% comment %} Display antigo dos produtos em formato de tabela
+    <table>
+      <tr>
+        <th>Nome do produto</th>
+        <th>Descrição</th>
+        <th>Tipo Produto</th>
+        <th>Produtor</th>
+      </tr>
+        {% for Produto in Produtos %}
+        <tr>
+
+          <th><a href= "{% url 'produto_detalhe' Produto.id %}"></a></th>
+          <th>{{Produto.descricao_produto}}</th>
+          <th>{{Produto.tipo_produto}}</th>
+          <th>{{Produto.user_produtor}}</th>
+        </tr>
+        {% endfor %}
+      </tr>
+    </table>
+    ------------------------------------Antiga view da tabela
+    {% endcomment %}
+    {% comment %}
+    <form method="get">
+      {% with params=request.GET.urlencode %}
+        {{meuFiltro.form}}
+      {% endwith %}
+      <button type="submit">Procurar</button>
+    </form>
+    {% endcomment %}
+    {% comment %} <div class="pagination">
+        <span class="step-links">
+            {% if Produtos.has_previous %}
+                <a href="{% relative_url 1 'page' request.GET.urlencode %}">&laquo; first</a>
+                <a href="{% relative_url Produtos.previous_page_number 'page' request.GET.urlencode %} ">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ Produtos.number }} of {{ Produtos.paginator.num_pages }}.
+            </span>
+
+            {% if Produtos.has_next %}
+                <a href="{% relative_url Produtos.next_page_number 'page' request.GET.urlencode %}">next</a>
+                <a href="{% relative_url Produtos.paginator.num_pages 'page' request.GET.urlencode %}">last &raquo;</a>
+            {% endif %}
+        </span>
+
+    </div> {% endcomment %}
+{% endblock %}

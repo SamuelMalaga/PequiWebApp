@@ -1,7 +1,8 @@
 
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404, HttpResponseRedirect
 from django.http import Http404
 from django.contrib import messages
+from django.urls import reverse
 
 from .filters import ProdutoFilter
 from .models import Contato, Produto, Usuario_pequi,ProdutoReview
@@ -165,7 +166,6 @@ def submit_review(request, id):
 ##------> Registro de endereços
 
 def cadastro_endereco(request):
-  print('cadastro endereco')
   if not request.user.is_authenticated:
     raise Http404
   if request.method == 'POST':
@@ -184,7 +184,10 @@ def cadastro_endereco(request):
   else:
     form = EnderecoModelForm()
   context = {'form':form }
-  return render(request, 'produto.html', context)
+  return render(request, 'cadastro_endereco.html', context)
+
+def remover_endereco(request, endereco_id):
+  pass
 
 def endereco_submit(request):
   print('endereco submit')
@@ -203,7 +206,7 @@ def endereco_submit(request):
       return redirect('/')
     else:
       messages.error(request, 'Erro ao salvar produto')
-      return redirect(request, 'produto.html')
+      return redirect(request, 'cadastro_endereco.html')
   else:
     return redirect('index')
 
@@ -228,6 +231,9 @@ def cadastro_contato(request):
     form = ContatoModelForm()
   context = {'form':form }
   return render(request, 'contato.html', context)
+
+def remover_contato(request, contato_id):
+  pass
 
 def contato_submit(request):
   if not request.user.is_authenticated:
@@ -298,15 +304,17 @@ def alterar_dados_produto(request, produto_id):
   }
   return render(request, 'editar_produto.html', context)
 
+def remover_produto(request, produto_id):
+  id = request.user.id
+  produto = Produto.objects.get(pk=produto_id)
+  produto.delete()
+  return redirect('minha_conta', id = id)
 
-
-
-##------> Home Page e debugger
-def index(request):
+def pagina_produtos(request):
   produtos_list = Produto.objects.all().order_by('id')
   produtos_filtro = ProdutoFilter(request.GET, queryset=produtos_list)
 
-  paginator = Paginator(produtos_filtro.qs, 2)
+  paginator = Paginator(produtos_filtro.qs, 10)
   page_number = request.GET.get('page')
   page_obj = paginator.get_page(page_number)
   try:
@@ -320,4 +328,8 @@ def index(request):
     "Page": page_obj,
     "meuFiltro" : produtos_filtro
   }
-  return render(request, 'index.html', context)
+  return render(request, 'pagina_produtos.html', context)
+
+##------> Home Page e debugger
+def index(request):
+  return render(request, 'index.html')

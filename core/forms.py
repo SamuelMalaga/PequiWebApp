@@ -16,6 +16,16 @@ class ExtendedUserCreationForms(UserCreationForm):
     model = User
     fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
+    widgets = {
+        'username': forms.TextInput(attrs={'class': 'form-control form-control-sm ', 'value' : "Cadastrar", 'label': "Cadastrar"}),
+        'email': forms.TextInput(attrs={'class': 'form-control form-control-sm '}),
+        'first_name': forms.TextInput(attrs={'class': 'form-control form-control-sm '}),
+        'last_name': forms.TextInput(attrs={'class': 'form-control form-control-sm '}),
+        'password1': forms.TextInput(attrs={'class': 'form-control form-control-sm '}),
+        'password2': forms.TextInput(attrs={'class': 'form-control form-control-sm '}),
+
+
+    }
     def save(self, commit=True):
       user = super().save(commit=False)
 
@@ -26,6 +36,7 @@ class ExtendedUserCreationForms(UserCreationForm):
       if commit:
         user.save()
       return user
+
 
 class UserPequiForm(forms.ModelForm):
   class Meta:

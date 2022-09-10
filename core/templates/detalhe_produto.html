@@ -13,25 +13,20 @@
     <input type="hidden" name='prod_id' id='prod_id' value="{{produto.id}}">
 
     <h2>Formulário de Review</h2>
-    <form class="review-form" action="{% url 'submit_review' produto.id %}" method="POST">
+    <form class="review-form" action="{% url 'submit_review' produto.id %}" method="POST" style="display: flex; justify-content:center">
         {% csrf_token %}
-        <input type="hidden" name='prod_id' id='prod_id' value="{{produto.id}}">
-        <textarea class="input" name="texto_avaliacao" id='texto_avaliacao' cols="30" rows="10" placeholder="Sua avaliacao"></textarea>
+        <textarea class="form-control" name="texto_avaliacao" id='texto_avaliacao' rows="3" placeholder="Sua avaliacao"></textarea>
+        {% comment %} <textarea class="input" name="texto_avaliacao" id='texto_avaliacao' cols="30" rows="10" placeholder="Sua avaliacao"></textarea> {% endcomment %}
         {% comment %} <input type="number" id="nota_avaliacao" name="nota_avaliacao" min="1" max="5"> {% endcomment %}
-        <div class="rate">
-            <h5>Testecss</h5>
-            <input type="radio" name="nota_avaliacao" id="rating10" value="5" required /><label for="rating10" title="5"></label>
-            <input type="radio" name="nota_avaliacao" id="rating9" value="4.5" required /><label for="rating9" title="4.5" class="half"></label>
-            <input type="radio" name="nota_avaliacao" id="rating8" value="4" required /><label for="rating8" title="4"></label>
-            <input type="radio" name="nota_avaliacao" id="rating7" value="3.5" required /><label for="rating7" title="3.5" class="half"></label>
-            <input type="radio" name="nota_avaliacao" id="rating6" value="3" required /><label for="rating6" title="3"></label>
-            <input type="radio" name="nota_avaliacao" id="rating5" value="2.5" required /><label for="rating5" title="2.5" class="half"></label>
-            <input type="radio" name="nota_avaliacao" id="rating4" value="2" required /><label for="rating4" title="2"></label>
-            <input type="radio" name="nota_avaliacao" id="rating3" value="1.5" required /><label for="rating3" title="1.5" class="half"></label>
-            <input type="radio" name="nota_avaliacao" id="rating2" value="1" required /><label for="rating2" title="1"></label>
-            <input type="radio" name="nota_avaliacao" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
+        <div class="rating">
+            <input type="radio" name="nota_avaliacao" value="5" id="5"><label for="5">☆</label>
+            <input type="radio" name="nota_avaliacao" value="4" id="4"><label for="4">☆</label>
+            <input type="radio" name="nota_avaliacao" value="3" id="3"><label for="3">☆</label>
+            <input type="radio" name="nota_avaliacao" value="2" id="2"><label for="2">☆</label>
+            <input type="radio" name="nota_avaliacao" value="1" id="1"><label for="1">☆</label>
         </div>
-        <input type="submit" value="Submit">
+        <input type="submit" class="btn btn-primary w-25" value="Enviar Avaliacao" >
     </form>
+    <a href="/">Voltar</a>
 {% endblock %}
 

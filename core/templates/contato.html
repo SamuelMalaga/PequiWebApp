@@ -1,13 +1,21 @@
 {% extends 'global_template.html' %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+
 {% block content %}
-  <h1>Produto</h1>
+  <h1>Contato</h1>
   {% if request.user.is_anonymous %}
     <h2> Faça o login como produtor para cadastrar o produto </h2>
   {% else %}
-  <form action="submit" method="post">
-    {%  csrf_token  %}
+  <form action="submit" method="post" style="display: flex; justify-content:center">
+    {% comment %} {%  csrf_token  %}
     {{form.as_p}}
-    <input type="submit" value="Submit"><br>
+    <input type="submit" value="Submit"><br> {% endcomment %}
+    <div class="form-control form-control-sm w-75" >
+      {%  csrf_token  %}
+      {% bootstrap_form form %}
+      <input type="submit" class="btn btn-primary w-25" value="Cadastrar Contato" style="display: flex; justify-content:center">
+    </div>
   </form>
   {% endif %}
 {% endblock %}

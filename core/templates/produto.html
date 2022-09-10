@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
+{% extends 'global_template.html' %}
+{% load templatehelpers %}
+{% load bootstrap5 %}
+{% block content %}
   <h1>Produto</h1>
   {% if request.user.is_anonymous %}
     <h2> Faça o login como produtor para cadastrar o produto </h2>
   {% else %}
-  <form action="submit" method="post">
-    {%  csrf_token  %}
-    {{form.as_p}}
-    <input type="submit" value="Submit"><br>
-  </form>
+  <form action="{% url 'produto_submit' %}" method="POST" style="display: flex; justify-content:center" >
+    <div class="form-control form-control-sm w-75" >
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input type="submit" class="btn btn-primary w-25" value="Cadastrar Produto" style="display: flex; justify-content:center">
+    </div>
+</form>
   {% endif %}
-</body>
-</html>
+{% endblock %}

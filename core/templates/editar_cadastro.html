@@ -9,8 +9,7 @@
       <h2> Dentro da tag </h2>
         {% csrf_token %}
         {% bootstrap_form form %}
-        {{ form_user.as_p }}
-        {{ form_user_pequi.as_p }}
+        {% bootstrap_form form_user_pequi %}
         <input type="submit" class="btn btn-primary" value="Atualizar"><br>
     </form>
     <h2><a href="{% url 'minha_conta' id=user_ref.id %}">voltar</a><h2>

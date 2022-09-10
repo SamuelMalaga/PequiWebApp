@@ -1,72 +1,47 @@
 {% extends 'global_template.html' %}
 {% load templatehelpers %}
+{% load static %}
 {% block content %}
-  <h1>Teste css</h1>
-  {% if request.user.is_anonymous %}
-        <h2> Faça o login <h2>
-        <h2> Ou cadastre-se <h2>
-        <h2><a href="/registre/submit"> Cadastro! </a> </h2>
-  {% else %}
-        <h2> Bem vindo <h2>
-        <h3> Seu email é {{user.email}}
-        <h3> Seu CPF é {{user.usuario_pequi.DOC_Usuario}}
-        <h3> Seu ID é user {{user.id}} <h3>
-        <h3> Produtor? {{user.usuario_pequi.is_Produtor}} <h3>
-        <h3> CNPJ? {{user.usuario_pequi.is_CNPJ}} <h3>
-        <h3> ID pequi_usuario {{user.usuario_pequi.user_id}} <h3>
-        <h3> Data nascimento {{user.usuario_pequi.data_nascimento_usuario}}<h3>
-        <h3> Cadastre o endereco<a href="/endereco/"> Aqui </a><h3>
-        <h3> Cadastre o Contato<a href="/contato/"> Aqui </a><h3>
-          {%if user.usuario_pequi.is_Produtor%}
-            <h2> Cadastre o produto <a href="/produto/"> Aqui </a> </h2>
-          {% endif%}
-        <h2><a href="/logout/">Sair </a></h2>
-  {% endif %}
-  <h1> Pagina inicial <h1>
-  <h2> Produtos </h2>
-    <form method="get">
-      {% with params=request.GET.urlencode %}
-        {{meuFiltro.form}}
-      {% endwith %}
-      <button type="submit">Procurar</button>
-    </form>
-    <table>
-      <tr>
-        <th>Nome do produto</th>
-        <th>Descrição</th>
-        <th>Tipo Produto</th>
-        <th>Produtor</th>
-      </tr>
-      {% for Produto in Produtos %}
-      <tr>
-        <th><a href= "{% url 'produto_detalhe' Produto.id %}">{{Produto.nome_produto}}</a></th>
-        <th>{{Produto.descricao_produto}}</th>
-        <th>{{Produto.tipo_produto}}</th>
-        <th>{{Produto.user_produtor}}</th>
-      </tr>
-      {% endfor %}
-    </table>
-    <ul class="pagination">
-      <h2>TESTETAG</h2>
-
-    </ul>
-      <div class="pagination">
-        <span class="step-links">
-            {% if Produtos.has_previous %}
-                <a href="{% relative_url 1 'page' request.GET.urlencode %}">&laquo; first</a>
-                <a href="{% relative_url Produtos.previous_page_number 'page' request.GET.urlencode %} ">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ Produtos.number }} of {{ Produtos.paginator.num_pages }}.
-            </span>
-
-            {% if Produtos.has_next %}
-                <a href="{% relative_url Produtos.next_page_number 'page' request.GET.urlencode %}">next</a>
-                <a href="{% relative_url Produtos.paginator.num_pages 'page' request.GET.urlencode %}">last &raquo;</a>
-            {% endif %}
-        </span>
-
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src={% static 'img/mel.webp' %} alt="Rabanete">
     </div>
-    </table>
+    <div class="carousel-item">
+      <img class="d-block w-100" src={% static 'img/mel.webp' %} alt="Segundo Slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src={% static 'img/mel.webp' %} alt="Terceiro Slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Anterior</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Próximo</span>
+  </a>
+</div>
+<nav>
+  <div class="inicio">
+    <div class="sobreapp">
+      <h2>SOBRE NÓS</h2>
+      <p>
+        É uma linguagem de estilo utilizada para definir a apresentação de documentos escritos em uma linguagem de marcação, como seu principal benefício
+        <strong>
+          <h6>continuar lendo...</h6>
+        </strong>
+      </p>
+    </div>
+    <div class="sobreapp">
+      missao app
+    </div>
+    <div class="sobreapp">
+      terceira app
+    </div>
+  </div>
+</nav>
+
+</body>
 {% endblock %}
