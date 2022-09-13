@@ -9,6 +9,11 @@
     <h3>{{produto.user_produtor}}</h3>
     <h3>{{produto.id}}</h3>
     <h3>{{produto}}</h3>
+    <form action="{% url 'cart_add' produto.id %}" method='POST'>
+        {{form}}
+        {% csrf_token %}
+        <input type="submit" value="add to cart">
+    </form>
 
     <input type="hidden" name='prod_id' id='prod_id' value="{{produto.id}}">
 
@@ -27,6 +32,14 @@
         </div>
         <input type="submit" class="btn btn-primary w-25" value="Enviar Avaliacao" >
     </form>
+    <div>
+    {{ cart }}
+    {% if produto in cart.products.all %}
+      Produto no Carrinho
+    {% else %}
+      Adicione ao carrinho
+    {% endif %}
+    </div>
     <a href="/">Voltar</a>
 {% endblock %}
 

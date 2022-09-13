@@ -80,3 +80,11 @@ class ReviewForms(forms.ModelForm):
   class Meta:
     model = ProdutoReview
     fields = ['texto_avaliacao', 'nota_avaliacao']
+
+
+#-------> Forms para adição de produtos no carrinho
+PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1,21)]
+class ProdutoAddCarrinhoForm(forms.Form):
+  quantity = forms.TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
+  override = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
+

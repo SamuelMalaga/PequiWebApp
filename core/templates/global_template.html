@@ -51,14 +51,15 @@
             {% comment %} Link para o Login {% endcomment %}
             {% if request.user.is_authenticated %}
             <li><a href="{% url 'logout' %}" style="color: #EDEDED; text-decoration-line: none">Logout</a></li>
+            <li><a href="{% url 'cart_home' %}" style="color: #EDEDED; text-decoration-line: none">Carrinho</a></li>
             {% else %}
             <li><a href="{% url 'login' %}" style="color: #EDEDED; text-decoration-line: none">Login</a></li>
             {% endif %}
             {% comment %} Link para o Home(index) {% endcomment %}
             <li><a href="{% url 'pagina_inicial' %}" style="color: #EDEDED; text-decoration-line: none">Home</a></li>
-            {% comment %} Carrinho
-            <li><a href="#" id="cart"><i class="fa fa-shopping-cart"></i> Cart <span class="badge"></span></a></li>
-            {% endcomment %}
+            {% comment %} Link para o Home(index) {% endcomment %}
+            {% comment %} <li><a href="{% url 'cart_home' %}" style="color: #EDEDED; text-decoration-line: none">Carrinho</a></li> {% endcomment %}
+
           </ul>
         </span>
     </nav>

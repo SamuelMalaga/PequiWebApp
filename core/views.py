@@ -5,13 +5,15 @@ from django.contrib import messages
 from django.urls import reverse
 
 from .filters import ProdutoFilter
-from .models import Contato, Produto, Usuario_pequi,ProdutoReview
+from .models import Contato, Produto, Usuario_pequi,ProdutoReview, Cart
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import AtualizacaoCadastroForm, EnderecoModelForm, ExtendedUserCreationForms, ReviewForms, UserPequiForm, ProdutoModelForm, ContatoModelForm, AtualizacaoUserPequi
+from .forms import AtualizacaoCadastroForm, EnderecoModelForm, ExtendedUserCreationForms, ReviewForms, UserPequiForm, ProdutoModelForm, ContatoModelForm, AtualizacaoUserPequi, ProdutoAddCarrinhoForm
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.decorators.http import require_POST
+from .cart import Carrinho
 
 # Create your views here.
 
@@ -146,8 +148,12 @@ def produto_submit(request):
 ##------>Visualização de detalhes do produto e envio de review
 def produto_detalhe(request, id):
   produto= Produto.objects.get(id = id)
-  context = {'produto': produto}
-  print('produto detalhe')
+  produto_carrinho_form = ProdutoAddCarrinhoForm()
+  context = {
+    'produto': produto,
+    'form':produto_carrinho_form
+
+  }
   return render(request,'detalhe_produto.html', context)
 
 def submit_review(request, id):
@@ -329,6 +335,44 @@ def pagina_produtos(request):
     "meuFiltro" : produtos_filtro
   }
   return render(request, 'pagina_produtos.html', context)
+
+
+##------>Profile View (parte do carrinho)
+def cart_home(request):
+  carrinho = Carrinho(request)
+  context = {
+    'carrinho': carrinho
+  }
+  for item in carrinho:
+    print(item)
+
+  return render(request,'carrinho.html', context)
+
+# def cart_update(request):
+#     product_id = 18
+#     # Pega o produto com id 5
+#     product_obj = Produto.objects.get(id=product_id)
+#     # Cria ou pega a instância já existente do carrinho
+#     cart_obj, new_obj = Cart.objects.new_or_get(request)
+#     # E o produto se adiciona a instância do campo M2M
+#     cart_obj.products.add(product_obj) # cart_obj.products.add(product_id)
+#     #cart_obj.products.remove(product_obj) # cart_obj.products.remove(product_id)
+#     return redirect('produto_detalhe', id = product_id)
+@require_POST
+def cart_add(request,produto_id):
+  carrinho = Carrinho(request)
+  produto = get_object_or_404(Produto, id=produto_id)
+  form = ProdutoAddCarrinhoForm(request.POST)
+  if form.is_valid():
+    cd=form.cleaned_data
+    carrinho.add(produto=produto, quantity=cd['quantity'], override_quantity=cd['override'])
+  return render(request,'carrinho.html')
+
+def cart_remove(request, produto_id):
+  carrinho = Carrinho(request)
+  produto = get_object_or_404(Produto, id=produto_id)
+  carrinho.remove(produto)
+  return render(request,'carrinho.html')
 
 ##------> Home Page e debugger
 def index(request):
