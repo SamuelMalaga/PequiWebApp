@@ -2,17 +2,15 @@
 {% load templatehelpers %}
 {% load static %}
 {% block content %}
-  <h1>Teste css</h1>
-  <h1> Pagina inicial <h1>
-    <div class="filter_pagination">
-      <div class="produto_filter">
-        <form method="get">
+    <div class="filter">
+
+    </div>
+        {% comment %} <form method="get" class="form_pagination">
           {% with params=request.GET.urlencode %}
             {{meuFiltro.form}}
           {% endwith %}
           <button type="submit">Procurar</button>
-        </form>
-      </div>
+        </form> {% endcomment %}
     </div>
     <div class='produto_display'>
       {% for Produto in Produtos %}
@@ -44,7 +42,7 @@
             <li class="page-item"><a class="page-link" href="#" >Anterior</a></li>
             {% endif %}
             <span class="current" style="font-size: 20px; padding-top:1%">
-              Page {{ Produtos.number }} of {{ Produtos.paginator.num_pages }}
+              Página {{ Produtos.number }} de {{ Produtos.paginator.num_pages }}
             </span>
             {% if Produtos.has_next %}
             <li class="page-item"><a class="page-link"  href="{% relative_url Produtos.next_page_number 'page' request.GET.urlencode %}">Próxima</a></li>

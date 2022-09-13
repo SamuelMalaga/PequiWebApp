@@ -1,31 +1,39 @@
 {% extends 'global_template.html' %}
+{% load static %}
 {% block content %}
 
     <div class="perfil_container">
         <div class="perfil_info">
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="perfil_foto">
+                <img class="foto_perfil" src="{% static 'img/avatar2.png' %}" alt="profile_photo">
+            </div>
+            <div class="perfil_data">
+                <div class="perfil_data_section">
+                    <h5>{{user.first_name}}</h5>
                 </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">{{user.first_name}}</li>
-                  <li class="list-group-item">{{user.last_name}}</li>
-                  <li class="list-group-item">{{user.usuario_pequi.DOC_Usuario}}</li>
-                  <li class="list-group-item">{{user.last_login}}</li>
-                  <li class="list-group-item">A second item</li>
-                  <li class="list-group-item">A third item</li>
-                </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
+                <div class="perfil_data_section">
+                    <h5>{{user.last_name}}</h5>
                 </div>
-              </div>
+                <div class="perfil_data_section">
+                    <h5>{{user.usuario_pequi.DOC_Usuario}}</h5>
+                </div>
+                <div class="perfil_data_section">
+                    <h5>{{user.last_login}}</h5>
+                </div>
+                <div class="perfil_data_section">
+                    <h5>{{user.last_login}}</h5>
+                </div>
+                <div class="edit_profile">
+                    <h3>Edite seus dados <a href="{% url 'alterar_dados_conta'%}">aqui</a> </h3>
+                </div>
+                <div class="add_contato">
+                    <h3> Cadastre o Contato<a href="/contato/"> Aqui </a><h3>
+                </div>
+            </div>
 
         </div>
         <div class="perfil_items">
             <div class="perfil_items_contatos">
-
             </div>
             <div class="perfil_items_produtos">
 

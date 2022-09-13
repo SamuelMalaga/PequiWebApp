@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Usuario_pequi,Produto, Endereco, Contato, ProdutoReview
+from .models import Usuario_pequi,Produto, Endereco, Contato, ProdutoReview,Cart
 
 # Register your models here.
 
@@ -30,4 +30,5 @@ admin.site.register(Produto, ProdutoAdmin)
 admin.site.register(Endereco, EnderecoAdmin)
 admin.site.register(Contato, ContatoAdmin)
 admin.site.register(ProdutoReview, ReviewAdmin)
+admin.site.register(Cart)
 

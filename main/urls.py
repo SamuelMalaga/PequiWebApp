@@ -23,7 +23,7 @@ from core.views import (
                         contato_submit, produto_detalhe, ajuda,
                         sobre, minha_conta, submit_review,
                         alterar_dados_conta, alterar_dados_produto, remover_produto,
-                        pagina_produtos
+                        pagina_produtos, cart_home, cart_add, cart_remove
                         )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -79,6 +79,11 @@ urlpatterns = [
 
     #Remover Produto
     path('remover_produto/<int:produto_id>', remover_produto, name='remover_produto'),
+
+    #Carrinho
+    path('carrinho', cart_home, name='cart_home'),
+    path('carrinho/add/<int:produto_id>', cart_add, name='cart_add'),
+    path('carrinho/remove/<int:produto_id>', cart_remove, name='cart_remove'),
 
     #Sobre nós
     path('sobre/', sobre, name='sobre')
