@@ -1,16 +1,32 @@
 {% extends 'global_template.html' %}
 {% load templatehelpers %}
 {% load static %}
+{% load widget_tweaks %}
 {% block content %}
-    <div class="filter">
-
-    </div>
-        {% comment %} <form method="get" class="form_pagination">
-          {% with params=request.GET.urlencode %}
-            {{meuFiltro.form}}
-          {% endwith %}
-          <button type="submit">Procurar</button>
-        </form> {% endcomment %}
+    <div class="produto_filter">
+    <form method="get" class="filter_form">
+      {% with params=request.GET.urlencode %}
+          <div class="form-group col-sm-4 col-md-3">
+            <label>Nome do produto</label>
+            {% render_field meuFiltro.form.nome_produto class="form-control" style="margin-top: 2%" placeholder="Nome do produto"%}
+          </div>
+          <div class="form-group col-sm-4 col-md-3">
+            <label>Preço do produto</label>
+            {% render_field meuFiltro.form.preco_produto class="form-control" style="margin-top: 2%" placeholder="Preço do produto"%}
+          </div>
+          <div class="custom-select">
+            <label for="id_tipo_produto">Tipo do produto</label>
+            <select class="form-select form-select-sm" name="tipo_produto" id="id_tipo_produto" >
+              <option>
+                {% for tipo_produto in meuFiltro.form.tipo_produto %}
+                {{tipo_produto.tag}}
+                {% endfor %}
+              </option>
+            </select>
+          </div>
+           <button class="btn btn-primary" type="submit" style="width: 100px; height: 25px; padding:0; margin-top: 35px;">Procurar</button>
+      {% endwith %}
+    </form>
     </div>
     <div class='produto_display'>
       {% for Produto in Produtos %}
@@ -32,8 +48,7 @@
       </div>
       {% endfor %}
     </div>
-    <div class="filter_pagination">
-      <div class="produto_pagination">
+    <div class="produto_pagination">
         <nav class='pagination_menu'aria-label="Page navigation example">
           <ul class="pagination justify-content-center" style="margin:0">
             {% if Produtos.has_previous %}
@@ -51,8 +66,8 @@
             {% endif %}
           </ul>
         </nav>
-      </div>
     </div>
+
     {% comment %} Display antigo dos produtos em formato de tabela
     <table>
       <tr>
