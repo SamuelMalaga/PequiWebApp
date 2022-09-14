@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     'bootstrap5',
     'bootstrapform',
+    'widget_tweaks',
     #Apps criados
     'core'
 ]

@@ -244,7 +244,6 @@ section img {
 }
 
 .produto_display{
-
   width: 80%;
   height: auto;
   background-color: rgb(255, 255, 255);
@@ -256,15 +255,16 @@ section img {
   justify-content: space-between;
   flex-wrap: wrap;
   grid-gap: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .produto_pagination{
-  border: solid 1px #000;
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fcfcfc;
 }
 .filter_pagination {
   display: flex;
@@ -292,12 +292,32 @@ section img {
 
 }
 .produto_filter{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 2%;
   border: solid 1px #000;
-  background-color: #fa7070;
-  width: auto;
-  height: 50px;
-  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 10%;
+  display: flex;
+  justify-content: space-evenly;
+  border-radius: 15px 15px 0 0;
 }
+.filter_form{
+  margin-top: 1%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.custom-select{
+  margin:0 ;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+/*=---------------------Select Dropdown------------------*/
+
 /*---------------------SearchBar-----------------*/
 .search_bar{
   display: flex;
