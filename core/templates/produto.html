@@ -6,7 +6,7 @@
   {% if request.user.is_anonymous %}
     <h2> Faça o login como produtor para cadastrar o produto </h2>
   {% else %}
-  <form action="{% url 'produto_submit' %}" method="POST" style="display: flex; justify-content:center" >
+  <form action="{% url 'produto_submit' %}" enctype="multipart/form-data" method="POST" style="display: flex; justify-content:center" >
     <div class="form-control form-control-sm w-75" >
       {% csrf_token %}
       {% bootstrap_form form %}

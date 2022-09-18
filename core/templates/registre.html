@@ -1,22 +1,94 @@
 {% extends 'global_template.html' %}
 {% load bootstrap5 %}
 {% bootstrap_css %}
+{% load templatehelpers %}
+{% load widget_tweaks %}
 {% block content%}
 <body>
     <h1> Cadastre-se </h1>
+    {% comment %}
     <form action="{% url 'create_usuario'%}" method= "POST" style="display: flex; justify-content:center">
       <div class="form-control form-control-sm w-75" >
           {% csrf_token %}
           {% bootstrap_form form %}
           {% bootstrap_form pequi_user_form %}
-          {% comment %} {{ form.as_p }}
-          {{ pequi_user_form.as_p }} {% endcomment %}
-
+           {{ form.as_p }}
+          {{ pequi_user_form.as_p }}
           <input type="submit" class="btn btn-primary w-25" value="Cadastrar" style="display: flex; justify-content:center">
       </div>
     </form>
-
-    <h2> voltar <h2>
-    <h2><a href="/"> Inicio! </a> </h2>
+    {% endcomment %}
+    <form action="{% url 'create_usuario'%}" method= "POST" class="cadastro_form" >
+        <div class="cadastro">
+          <div class="form-control form-control-sm w-100">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label" for="id_username">Usuário</label>
+              {{form.username|add_class:'form-control'}}
+              {% comment %} {% render_field form.username class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="id_email">Email</label>
+              {{form.email|add_class:'form-control'}}
+              {% comment %} {% render_field form.email class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="id_first_name">First name</label>
+              {{form.first_name|add_class:'form-control'}}
+              {% comment %} {% render_field form.first_name class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="id_last_name">Last name</label>
+              {{form.last_name|add_class:'form-control'}}
+              {% comment %} {% render_field form.last_name class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="id_password1">Senha</label>
+              {{form.password1|add_class:'form-control'}}
+              {% comment %} {% render_field form.password1 class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="id_password2">Confirmação de senha</label>
+              {{form.password2|add_class:'form-control'}}
+              {% comment %} {% render_field form.password2 class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label for="id_data_nascimento_usuario">Data de nascimento do usuario</label>
+              {{pequi_user_form.data_nascimento_usuario|add_class:'form-control'}}
+              {% comment %} {% render_field pequi_user_form.data_nascimento_usuario class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label for="id_DOC_Usuario">Documento do usuário</label>
+              {{pequi_user_form.DOC_Usuario|add_class:'form-control'}}
+              {% comment %} {% render_field pequi_user_form.DOC_Usuario class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label for="id_is_CNPJ">O documento informado é CNPJ?</label>
+              {{pequi_user_form.is_CNPJ|add_class:'form-control'}}
+              {% comment %} {% render_field pequi_user_form.is_CNPJ class="form-control"%} {% endcomment %}
+            </div>
+            <div class="mb-3">
+              <label for="id_is_Produtor">Você quer se registrar como produtor?</label>
+              {{pequi_user_form.is_Produtor|add_class:'form-control'}}
+              {% comment %} {% render_field pequi_user_form.is_Produtor class="form-control"%} {% endcomment %}
+            </div>
+            {% comment %}
+            {% for field in form %}
+            <div class="mb-3">
+              <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{field|add_class:'form-control '}}
+            </div>
+            {% endfor %}
+            {% for field_pequi in pequi_user_form %}
+            <div class="mb-3">
+              <label for="{{ field_pequi.id_for_label }}">{{ field_pequi.label }}</label>
+              {{field_pequi|add_class:'form-control'}}
+            </div>
+            {% endfor %}
+            {% endcomment %}
+            <input type="submit" class="btn btn-primary w-25" value="Cadastrar" style="display: flex; justify-content:center">
+          </div>
+        </div>
+    </form>
 </body>
 {% endblock%}
