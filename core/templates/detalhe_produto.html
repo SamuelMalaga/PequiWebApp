@@ -1,8 +1,73 @@
 {% extends 'global_template.html' %}
 {% load bootstrap5 %}
+{% load static %}
+{% load widget_tweaks %}
 {% bootstrap_css %}
 {% block content %}
-    <h2>Produto</h2>
+    <div class="produto_content">
+        <div class="produto_container">
+          <div class="produto_foto_container">
+            {% if produto.imagem_produto %}
+            <img src="/media/{produto.imagem_produto}}" alt="" class="foto_produto">
+            {% else %}
+            <img src="{% static 'img/sem_imagem.png' %}" alt="" class="foto_produto">
+            {% endif %}
+          </div>
+          <div class="produto_detalhe">
+            <div class="produto_info" style="background-color: #ffffff;border-radius: 0px 10px 0px 0px;">
+              <h1 style="border-radius: 0px 10px 0px 0px;">{{produto.nome_produto}}</h1>
+              <h5 style="text-align: center;">Tipo: {{produto.tipo_produto}}</h5>
+              <h5 style="text-align: center;">Preço: R$ {{produto.preco_produto}}</h5>
+              <h5 style="text-align: center;">Produtor: {{produto.user_produtor}}</h5>
+            </div>
+            <div class="produto_descricao" style="text-align: center; background-color: #ffffff; padding:1%; border-radius: 0px 0px 10px 0px; " >
+              <span >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in ligula tincidunt, dignissim purus in, blandit sapien. Ut tempor ex dui, id mollis massa vulputate vitae. Donec sit amet efficitur risus, eget porta purus. Phasellus fermentum sagittis elementum. Sed semper ornare pretium. Aenean in euismod magna. Aliquam semper diam mi, id consectetur dolor lobortis eget. </span>
+            </div>
+          </div>
+        </div>
+        {% if user.is_authenticated %}
+          <div class="produto_avaliacao">
+            <form class="row g-3" action="{% url 'submit_review' produto.id %}" method="POST" style="padding:2%; background-color:#ffffff;border-radius: 10px 10px 10px 10px;margin:0;border: solid 1px #000;">
+              {% csrf_token %}
+              <div class="col-md-9">
+                <label class="form-label" for="id_texto_avaliacao">Comente o que achou do produto</label>
+                {{avaliacao_form.texto_avaliacao|add_class:'form-control'}}
+              </div>
+              <div class="col-md-3">
+                <label for="inputState" class="form-label">Nota para o produto</label>
+                {{avaliacao_form.nota_avaliacao|add_class:'form-control w-100'}}
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Enviar Review</button>
+              </div>
+            </form>
+          </div>
+        {% endif %}
+        <div class="produto_reviews">
+          {% if produto_reviews %}
+            {% for review in produto_reviews %}
+            <div class="review_card">
+              <div class="user_review_foto">
+                <img src="{% static 'img/avatar2.png' %}" class="img-thumbnail" alt="...">
+              </div>
+              <div class="review_info">
+                <div class="user_review_name" style="margin:0; text-align:center">
+                  <h5 style="margin:0; text-align:center;  margin-top: 0.6%;">Review de: {{review.usuario_rating.first_name}}</h5>
+                </div>
+                <div class="user_review_text" style="">
+                  <span>{{review.texto_avaliacao}}</span>
+                </div>
+                <div class="user_review_score_time">
+                  <h5 style="margin:0; text-align:center;">Nota: {{review.nota_avaliacao}} de 5 | Postada em: {{review.criado_em}}</h5>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+          <h1>Não existem avaliações para esse produto</h1>
+          {% endif %}
+        </div>
+    {% comment %} <h2>Produto</h2>
     <h3>{{produto.nome_produto}}</h3>
     <h3>{{produto.descricao_produto}}</h3>
     <h3>{{produto.tipo_produto}}</h3>
@@ -13,16 +78,16 @@
         {{form}}
         {% csrf_token %}
         <input type="submit" value="add to cart">
-    </form>
-
+    </form> {% endcomment %}
+    {% comment %}
     <input type="hidden" name='prod_id' id='prod_id' value="{{produto.id}}">
 
     <h2>Formulário de Review</h2>
     <form class="review-form" action="{% url 'submit_review' produto.id %}" method="POST" style="display: flex; justify-content:center">
         {% csrf_token %}
         <textarea class="form-control" name="texto_avaliacao" id='texto_avaliacao' rows="3" placeholder="Sua avaliacao"></textarea>
-        {% comment %} <textarea class="input" name="texto_avaliacao" id='texto_avaliacao' cols="30" rows="10" placeholder="Sua avaliacao"></textarea> {% endcomment %}
-        {% comment %} <input type="number" id="nota_avaliacao" name="nota_avaliacao" min="1" max="5"> {% endcomment %}
+         <textarea class="input" name="texto_avaliacao" id='texto_avaliacao' cols="30" rows="10" placeholder="Sua avaliacao"></textarea> {% endcomment %}
+        {% comment %} <input type="number" id="nota_avaliacao" name="nota_avaliacao" min="1" max="5">
         <div class="rating">
             <input type="radio" name="nota_avaliacao" value="5" id="5"><label for="5">☆</label>
             <input type="radio" name="nota_avaliacao" value="4" id="4"><label for="4">☆</label>
@@ -40,6 +105,6 @@
       Adicione ao carrinho
     {% endif %}
     </div>
-    <a href="/">Voltar</a>
+    <a href="/">Voltar</a>{% endcomment %}
 {% endblock %}
 

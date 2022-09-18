@@ -1,58 +1,99 @@
 {% extends 'global_template.html' %}
 {% load static %}
 {% block content %}
-
+    <h1>Meu Perfil</h1>
     <div class="perfil_container">
         <div class="perfil_info">
             <div class="perfil_foto">
                 <img class="foto_perfil" src="{% static 'img/avatar2.png' %}" alt="profile_photo">
             </div>
             <div class="perfil_data">
-                <div class="perfil_data_section">
-                    <h5>{{user.first_name}}</h5>
+                <div class="perfil_data_section_nome">
+                    <h4>{{user.first_name}}</h4>
                 </div>
                 <div class="perfil_data_section">
-                    <h5>{{user.last_name}}</h5>
+                    <h4>{{user.last_name}}</h4>
                 </div>
                 <div class="perfil_data_section">
-                    <h5>{{user.usuario_pequi.DOC_Usuario}}</h5>
+                    <h4>{{user.usuario_pequi.DOC_Usuario}}</h4>
                 </div>
+                {% if user.usuario_pequi.is_Produtor %}
                 <div class="perfil_data_section">
-                    <h5>{{user.last_login}}</h5>
+                    <h4>Status: Perfil de produtor</h4>
                 </div>
+                {% else %}
                 <div class="perfil_data_section">
-                    <h5>{{user.last_login}}</h5>
+                    <h4>Status: Perfil de cliente</h4>
                 </div>
-                <div class="edit_profile">
-                    <h3>Edite seus dados <a href="{% url 'alterar_dados_conta'%}">aqui</a> </h3>
+                {% endif %}
+                <div class="perfil_data_section">
+                    <h4>{{user.last_login}}</h4>
                 </div>
-                <div class="add_contato">
-                    <h3> Cadastre o Contato<a href="/contato/"> Aqui </a><h3>
+                <div class="edit_profile" style="text-align: center;">
+                    <h4>Edite seus dados da sua conta <a href="{% url 'alterar_dados_conta'%}">aqui</a> </h4>
+                </div>
+                <div class="add_contato" style="text-align: center;">
+                    <h4> Cadastre um Contato<a href="/contato/"> Aqui </a><h4>
                 </div>
             </div>
 
         </div>
         <div class="perfil_items">
             <div class="perfil_items_contatos">
+                <div class="perfil_items_contatos_header">
+                    <h4>Contatos</h4>
+                </div>
+
+                <div class="perfil_items_contatos_body">
+                    {% for contato in meus_contatos %}
+                    <div class="card" style="width: 18rem;">
+                        <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{contato.telefone_contato}}</li>
+                        <li class="list-group-item">{{contato.email_contato}}</li>
+                        {% if contato.is_wpp %}
+                        <li class="list-group-item">O numero é whatsapp</li>
+                        {% else %}
+                        <li class="list-group-item">Não é whatsapp</li>
+                        {% endif %}
+                        <li class="list-group-item"><button type="button" class="btn btn-primary">Editar</button></li>
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
+            {% if user.usuario_pequi.is_Produtor %}
             <div class="perfil_items_produtos">
-
+                <div class="perfil_items_produtos_header">
+                    <h4>Meus Produtos</h4>
+                </div>
+                <div class="perfil_items_produtos_body">
+                    {% for produto in produtos_usuario %}
+                    <div class="card" style="width: 18rem;">
+                        <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{produto.nome_produto}}</li>
+                        <li class="list-group-item">{{produto.tipo_produto}}</li>
+                        <li class="list-group-item"><a href="{% url 'alterar_dados_produto' produto.id %}" style="font-size:15px"> Editar dados</a></li>
+                        <li class="list-group-item"><a href="{% url 'remover_produto' produto.id %}" style="color:#ff0000; font-size:15px">Excluir Produto</a></li>
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-
+            {% endif %}
         </div>
     </div>
-    <h2>Minha conta</h2>
+    {% comment %} <h2>Minha conta</h2>
     <h3>{{user.first_name}}</h3>
     <h3>{{user.usuario_pequi.DOC_Usuario}}</h3>
     <h3>{{user.last_name}}</h3>
     <h3>{{user.last_login}}</h3>
     <h2>Edite seus dados <a href="{% url 'alterar_dados_conta'%}">aqui</a> </h2>
     <h3> Cadastre o endereco<a href="/endereco/"> Aqui </a><h3>
-    <h3> Cadastre o Contato<a href="/contato/"> Aqui </a><h3>
+    {% comment %} <h3> Cadastre o Contato<a href="/contato/"> Aqui </a><h3>{% endcomment %}
         {%if user.usuario_pequi.is_Produtor%}
             <h2> Cadastre o produto <a href="/produto/"> Aqui </a> </h2>
         {% endif%}
-<h2>Produtos</h2>
+{% comment %} <h2>Produtos</h2>
 <table>
     <tr>
         <th>Nome do produto</th>
@@ -71,7 +112,7 @@
         <th><a href="{% url 'alterar_dados_produto' produto.id %}">Editar Produto</a> </th>
         <th><a href="{% url 'remover_produto' produto.id %}">Remover Produto</a> </th>
     </tr>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
 </table>
 {% endblock %}
 

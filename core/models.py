@@ -77,18 +77,25 @@ class Endereco(models.Model):
   cidade_endereco = models.CharField('cidade_endereco', max_length=225, null=True)
   estado_endereco = models.CharField('estado_endereco', max_length=225,choices=ESTADO_CHOICES, null=True)
 
-
 class Contato(models.Model):
   user_contato = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
   telefone_contato = models.CharField('telefone_contato',null=True, max_length=225)
   email_contato = models.CharField('email_contato',null=True, max_length=225)
   is_wpp = models.BooleanField('is_wpp', null=True)
 
+
+REVIEW_NOTAS = [
+  ('1','1'),
+  ('2','2'),
+  ('3','3'),
+  ('4','4'),
+  ('5','5')
+]
 class ProdutoReview(models.Model):
   produto_rating = models.ForeignKey(Produto, on_delete=models.CASCADE)
   usuario_rating = models.ForeignKey(User, on_delete=models.CASCADE)
   texto_avaliacao = models.TextField('avaliacao', max_length=500, null=True)
-  nota_avaliacao = models.FloatField(null=True)
+  nota_avaliacao = models.FloatField(null=True,choices=REVIEW_NOTAS)
   criado_em = models.DateTimeField(auto_now_add=True)
 
 #---------------------Implementação do carrinho

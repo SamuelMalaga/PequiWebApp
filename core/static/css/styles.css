@@ -29,7 +29,6 @@ h1{
   font-family: arial,sans-serif;
   font-weight: bold;
   text-align: center;
-  padding-bottom: 10px;
 }
 .checkbox{
   text-align: center;
@@ -103,11 +102,15 @@ html {
   height: 100%;
 }
 
-header {
-  height: 30%;
+.header_pequi{
   width: 100%;
+  height: 10%;
 }
-
+.logo_pequi{
+  border: solid 1px #000;
+  padding: 0;
+  background-color: #301445;
+}
 .menu{
   display: flex;
   justify-content: flex-start;
@@ -157,7 +160,6 @@ p{
   font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
-  margin-bottom: 15px;
 }
 
 input{
@@ -165,32 +167,29 @@ input{
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: #301445;
-  color: white;
-  text-align: center;
-  line-height: 40px;
-}
-
-footer {
-  position: relative;
+  position: static;
   bottom:0;
   left:0;
-  height: 10%;
+  height:auto;
   width: 100%;
-
 }
 
+.carousel_container{
+  border: solid 1px #000;
+  position: relative;
+  top:-2%;
+  height: 500px;
+  overflow: hidden;
+}
 .rodape{
   text-align: center;
+  height: auto;
+  width: auto;
   font-size: 12px;
   font-family: 'Times New Roman', Times, serif;
   text-align: center;
   background: #301445;
   color: white;
-
 }
 
 .imginicial{
@@ -217,7 +216,7 @@ footer {
   text-align: center;
   border-radius: 4%;
   border: solid 1px #000;
-
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 }
 
 section img {
@@ -310,14 +309,31 @@ section img {
   display: flex;
   justify-content: space-evenly;
 }
+.button_filter{
+  margin-top: 0.5%;
+  background: #301445;
+  color: #fcfcfc;
+  height: 50%;
+  border-radius: 10px 10px 10px 10px;
+}
 .custom-select{
   margin:0 ;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
 }
-/*=---------------------Select Dropdown------------------*/
-
+/*=---------------------cadastro form filter------------------*/
+.cadastro{
+  display: flex;
+  justify-content: center;
+  width: 75%;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
+  flex-direction: column;
+}
+.cadsatro_form{
+  width: auto;
+}
 /*---------------------SearchBar-----------------*/
 .search_bar{
   display: flex;
@@ -366,7 +382,6 @@ a{
 }
 .container{
   margin-top: 10%;
-  border: solid 1px #000;
 }
 /*--------------------Perfil-----------------------*/
 .perfil_container{
@@ -381,9 +396,10 @@ a{
 .perfil_info{
   width: 30%;
   height: auto;
-  background-color: rgb(255, 255, 255);
-  border: solid 1px #000;
-  padding: 5px
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  justify-content: space-evenly;
 }
 .foto_perfil{
   border-radius: 50%;
@@ -396,10 +412,12 @@ a{
   display: flex;
   justify-content: center;
   padding: 10px;
+  border-radius: 10px 10px 10px 10px;
 }
 .perfil_data{
   display: flex;
   flex-direction: column;
+
 }
 .perfil_data_section{
   width: 100%;
@@ -408,6 +426,15 @@ a{
   border: solid 1px #000;
   display: flex;
   justify-content: center;
+}
+.perfil_data_section_nome{
+  width: 100%;
+  height: 20%;
+  background-color: rgb(255, 255, 255);
+  border: solid 1px #000;
+  justify-content: center;
+  display: flex;
+  border-radius: 10px 10px 0px 0px;
 }
 .edit_profile{
   width: 100%;
@@ -420,27 +447,175 @@ a{
   height: 20%;
   background-color: rgb(255, 255, 255);
   border: solid 1px #000;
+  border-radius: 0px 0px 10px 10px;
 }
 .perfil_items{
-  width: 70%;
-  height: auto;
-  background-color: rgb(255, 255, 255);
+  width: 68%;
+  height: 80%;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 3%;
+}
+.perfil_items_contatos{
+  margin-top: 4%;
+  height: 50%;
+  width: auto;
   border: solid 1px #000;
+  border-radius: 10px 10px 0px 0px;
+  padding: 0;
+  row-gap: 10%;
+}
+.perfil_items_contatos_header{
+  height: 15%;
+  width: auto;
+  border: solid 1px #000;
+  border-radius: 10px 10px 0px 0px;
+  text-align: center;
+  color: #EDEDED;
+  background: #301445;
+  position: sticky;
+
+}
+.perfil_items_contatos_body{
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  row-gap: 10%;
+  column-gap: 5%;
+  padding-top: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+  overflow-x: scroll;
+}
+.perfil_items_produtos{
+  margin-top: 4%;
+  height: 50%;
+  width: auto;
+  border: solid 1px #000;
+  border-radius: 10px 10px 0px 0px;
+  padding: 0;
+  row-gap: 10%;
+}
+.perfil_items_produtos_header{
+  height: 15%;
+  width: auto;
+  border: solid 1px #000;
+  border-radius: 10px 10px 0px 0px;
+  text-align: center;
+  color: #EDEDED;
+  background: #301445;
+  position: sticky;
+}
+.perfil_items_produtos_body{
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  row-gap: 10%;
+  column-gap: 5%;
+  padding-top: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+  overflow-x: scroll;
+}
+/*-----------------Pagina detalhes produto-----------------------*/
+.produto_content{
   display: flex;
   flex-direction: column;
 }
-.perfil_items_contatos{
-  height: 50%;
-  width: auto;
-  background-color: rgb(255, 255, 255);
-  border: solid 1px #000;
-  padding: 5px
+.produto_container{
+  width: 80%;
+  min-height: 30%;
+  display: flex;
+  margin-top: 25px;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 2%;
+  justify-content: space-between;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #ffffff;
+
 }
-.perfil_items_produtos{
-  height: 50%;
-  width: auto;
-  background-color: rgb(255, 255, 255);
+.produto_foto_container{
   border: solid 1px #000;
-  padding: 5px
+  width: auto;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px 0px 0px 10px;
+}
+.foto_produto{
+  max-width: 400px;
+  border-radius: 10px 0px 0px 10px;
+}
+.produto_detalhe{
+  border: solid 1px #000;
+  height: auto;
+  width: 90%;
+  border-radius: 0px 10px 10px 0px;
+}
+.produto_avaliacao{
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-radius: 10px 10px 10px 10px;
+}
+.produto_reviews{
+  max-height: 600px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 25px;
+  border-radius: 10px 10px 10px 10px;
+  border: solid 1px #000;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 10px;
+}
+.review_card{
+  height: 20vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.user_review_foto{
+  height: 100%;
+  max-height: 20vh;
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+.review_info{
+  width: 100%;
+}
+.user_review_name{
+  width: 100%;
+  height: 4vh;
+  text-align: center;
+  border: solid 1px #000;
+  border-radius: 0px 10px 0px 0px;
+
+}
+.user_review_text{
+  width: 100%;
+  height: 13vh;
+  border: solid 1px #000;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-radius: 0px 0px 0px 0px;
+  text-align: center;
+  background-color: #ffffff;
+  padding:1%;
+}
+.user_review_score_time{
+  width: 100%;
+  height: 3vh;
+  border: solid 1px #000;
+  border-radius: 0px 0px 10px 0px;
 }
 

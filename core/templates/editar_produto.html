@@ -2,22 +2,15 @@
 {% load bootstrap5 %}
 {% block content%}
 <body>
+  <h1> Atualizar Produto </h1>
   <div class="container">
-    <h1> Atualizar Produto </h1>
     <form action="{% url 'alterar_dados_produto' produto.id %}" method= "POST" style="display: flex; justify-content:center" >
         <div class="form-control form-control-sm w-75" >
           {% csrf_token %}
           {% bootstrap_form form_produto %}
-          {% comment %} {{ form.as_p }}
-          {{ pequi_user_form.as_p }} {% endcomment %}
-
           <input type="submit" class="btn btn-primary w-25" value="Atualizar" style="display: flex; justify-content:center">
         </div>
-        {% comment %} {% csrf_token %}
-        {{ form_produto.as_p }}
-        <input type="submit" class="btn btn-primary" value="Atualizar"><br> {% endcomment %}
     </form>
     <h2> <a href="{% url 'minha_conta' id=user_ref.id %}">voltar</a><h2>
-    <h2><a href="/"> Inicio! </a> </h2>
   </div>
 {% endblock%}

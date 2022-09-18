@@ -4,34 +4,34 @@
 {% load widget_tweaks %}
 {% block content %}
     <div class="produto_filter">
-    <form method="get" class="filter_form">
-      {% with params=request.GET.urlencode %}
-          <div class="form-group col-sm-4 col-md-3">
-            <label>Nome do produto</label>
-            {% render_field meuFiltro.form.nome_produto class="form-control" style="margin-top: 2%" placeholder="Nome do produto"%}
-          </div>
-          <div class="form-group col-sm-4 col-md-3">
-            <label>Preço do produto</label>
-            {% render_field meuFiltro.form.preco_produto class="form-control" style="margin-top: 2%" placeholder="Preço do produto"%}
-          </div>
-          <div class="custom-select">
-            <label for="id_tipo_produto">Tipo do produto</label>
-            <select class="form-select form-select-sm" name="tipo_produto" id="id_tipo_produto" >
-              <option>
-                {% for tipo_produto in meuFiltro.form.tipo_produto %}
-                {{tipo_produto.tag}}
-                {% endfor %}
-              </option>
-            </select>
-          </div>
-           <button class="btn btn-primary" type="submit" style="width: 100px; height: 25px; padding:0; margin-top: 35px;">Procurar</button>
-      {% endwith %}
-    </form>
-    </div>
+        <form method="get" class="filter_form">
+          {% with params=request.GET.urlencode %}
+              <div class="form-group col-sm-4 col-md-3">
+                {% comment %} <label>Nome do produto</label> {% endcomment %}
+                {% render_field meuFiltro.form.nome_produto class="form-control" style="margin-top: 2%" placeholder="Nome do produto"%}
+              </div>
+              <div class="form-group col-sm-4 col-md-3">
+                {% comment %} <label>Preço do produto</label> {% endcomment %}
+                {% render_field meuFiltro.form.preco_produto class="form-control" style="margin-top: 2%" placeholder="Preço do produto"%}
+              </div>
+              <div class="custom-select" >
+                {% comment %} <label for="id_tipo_produto">Tipo do produto</label> {% endcomment %}
+                <select class="form-select form-select-sm" name="tipo_produto" id="id_tipo_produto" style="margin-top: 10%">
+                  <option>
+                    {% for tipo_produto in meuFiltro.form.tipo_produto %}
+                    {{tipo_produto.tag}}
+                    {% endfor %}
+                  </option>
+                </select>
+              </div>
+              <button class="button_filter" type="submit" >Procurar</button>
+          {% endwith %}
+        </form>
+      </div>
     <div class='produto_display'>
       {% for Produto in Produtos %}
       <div class="card" style="width: 18rem;">
-        <img src="{% static 'img/mel.webp' %}" class="card-img-top" alt="...">
+        <img src="/media/{{Produto.imagem_produto}}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{Produto.nome_produto}}</h5>
           <p class="card-text">{{Produto.descricao_produto}}</p>
@@ -43,7 +43,6 @@
         </ul>
         <div class="card-body">
           <button type="button" class="btn btn-outline-primary"><a href= "{% url 'produto_detalhe' Produto.id %}" class="card-link">Detalhes</a></button>
-          <button type="button" class="btn btn-outline-primary"><a href="#" class="card-link">Contato</a></button>
         </div>
       </div>
       {% endfor %}

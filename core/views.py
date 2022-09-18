@@ -56,6 +56,17 @@ def create_usuario(request):
     if form.is_valid() and pequi_user_form.is_valid():
       user = form.save()
 
+      # user_username = form.cleaned_data('username')
+      # user_email = form.cleaned_data('email')
+      # user_first_name = form.cleaned_data('first_name')
+      # user_last_name = form.cleaned_data('last_name')
+      # user_password1 = form.cleaned_data('password1')
+      # user_password2 = form.cleaned_data('password2')
+      # user_pequi_data_nascimento_usuario = pequi_user_form.cleaned_data('data_nascimento_usuario')
+      # user_pequi_DOC_Usuario = pequi_user_form.cleaned_data('DOC_Usuario')
+      # user_pequi_is_CNPJ = pequi_user_form.cleaned_data('is_CNPJ')
+      # user_pequi_is_Produtor = pequi_user_form.cleaned_data('is_Produtor')
+
       pequi_user = pequi_user_form.save(commit=False)
       pequi_user.user = user
 
@@ -63,6 +74,8 @@ def create_usuario(request):
 
       username = form.cleaned_data.get('username')
       password = form.cleaned_data.get('password1')
+      #-------------Teste
+
       user = authenticate(username=username, password = password)
       login(request, user)
 
@@ -148,27 +161,36 @@ def produto_submit(request):
 ##------>Visualização de detalhes do produto e envio de review
 def produto_detalhe(request, id):
   produto= Produto.objects.get(id = id)
+  produto_reviews = ProdutoReview.objects.all().filter(produto_rating=produto)
+  produto_avaliacao= ReviewForms()
   produto_carrinho_form = ProdutoAddCarrinhoForm()
+  print(dir(produto_reviews))
+  print(id)
   context = {
     'produto': produto,
-    'form':produto_carrinho_form
-
+    'avaliacao_form': produto_avaliacao,
+    'form':produto_carrinho_form,
+    'produto_reviews': produto_reviews
   }
   return render(request,'detalhe_produto.html', context)
 
 def submit_review(request, id):
   url = request.META.get('HTTP_REFERER')
-  form = ReviewForms(request.POST)
-  if form.is_valid():
-    data = form.save(commit=False)
-    data.produto_rating = Produto.objects.get(id=id)
-    data.usuario_rating = request.user
-    data.texto_avaliacao = form.cleaned_data['texto_avaliacao']
-    data.nota_avaliacao = form.cleaned_data['nota_avaliacao']
-    data.save()
-    messages.success(request, 'Review feita!')
-    return redirect(url)
+  produto = Produto.objects.get(id = id)
+  if request.method =='POST':
+    produto_avaliacao = ReviewForms(request.POST, instance=produto)
+    if produto_avaliacao.is_valid():
+      data = produto_avaliacao.save()
+      data.produto_rating = produto
+      data.usuario_rating = request.user
+      data.texto_avaliacao = produto_avaliacao.cleaned_data['texto_avaliacao']
+      data.nota_avaliacao = produto_avaliacao.cleaned_data['nota_avaliacao']
+      data.save()
+      messages.success(request, 'Review feita!')
+    else:
+      produto_avaliacao = ReviewForms()
 
+  return redirect(url)
 ##------> Registro de endereços
 
 def cadastro_endereco(request):
